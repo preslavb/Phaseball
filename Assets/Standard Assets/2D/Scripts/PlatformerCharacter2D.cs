@@ -12,6 +12,7 @@ namespace UnityStandardAssets._2D
     public class PlatformerCharacter2D : MonoBehaviour
     {
         public int playerNumber = 1;
+		public TimeManager timeManager;
 
         [SerializeField] private float m_MaxSpeed = 10f;                    // The fastest the player can travel in the x axis.
         [SerializeField] private float m_JumpForce = 400f;                  // Amount of force added when the player jumps.
@@ -35,8 +36,9 @@ namespace UnityStandardAssets._2D
         private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 
         private bool hasBallControl = false;
-
-        private void Awake()
+		public bool slowTime = false; // used to keep track if time is slow or not.
+        
+		private void Awake()
         {
             // Setting up references.
             m_GroundCheck = transform.Find("GroundCheck");
@@ -49,6 +51,23 @@ namespace UnityStandardAssets._2D
 
         private void Update()
         {
+			//Test: Toggle timescale
+			if(Input.GetButtonDown("Fire1"))
+			{
+				if (!slowTime) 
+				{
+					slowTime = true;
+					timeManager.SlowDownTime();
+					print ("Slow time");
+				} 
+				else 
+				{
+					slowTime = false;
+					timeManager.NormalTime ();
+					print ("Normal time");
+				}
+			}
+
             if (m_JumpCooldown > 0)
             {
                 m_JumpCooldown -= Time.deltaTime;
@@ -131,7 +150,12 @@ namespace UnityStandardAssets._2D
             if (collision.gameObject.name == "Ball" && m_BallCooldown <= 0)
             {
                 hasBallControl = true;
-                
+
+				timeManager.SlowDownTime ();
+
+				slowTime = true;
+				print ("Slow time");
+
 				//Time.timeScale = 0.1f;
 
                 BallManager.hasBallBeenTouched = true;
@@ -153,11 +177,12 @@ namespace UnityStandardAssets._2D
 
         public void Move(Vector2 jumpDirection, bool jump)
         {
-			if (m_Grounded && hasBallControl) 
+			if (m_Grounded) 
 			{
-				Time.timeScale = 1.0f;
-			}
-
+				slowTime = false;
+				timeManager.NormalTime ();
+			} 
+				
             // If the player should jump...
             if (m_Grounded && jump && m_Anim.GetBool("Ground") && m_JumpCooldown <= 0 && !hasBallControl)
             {
@@ -174,6 +199,12 @@ namespace UnityStandardAssets._2D
             {
                 //TODO: Implement throwing
                 hasBallControl = false;
+
+				timeManager.NormalTime();
+
+				slowTime = false;
+				print ("Normal time");
+
                 GameObject ballInstance = Instantiate(m_BallPrefab);
 
                 ballInstance.transform.position = gameObject.transform.position;
