@@ -7,6 +7,7 @@ public static class BallManager
     public static bool hasBallBeenTouched = false;
 }
 
+
 namespace UnityStandardAssets._2D
 {
     public class PlatformerCharacter2D : MonoBehaviour
@@ -69,9 +70,13 @@ namespace UnityStandardAssets._2D
             }
 
 			if (m_Grounded && !hasBallControl)DrawParabola((new Vector2(Input.GetAxis("Horizontal" + playerNumber), Input.GetAxis("Vertical" + playerNumber))), 10);
+            
 		
 			if (hasBallControl) DrawThrowLine(new Vector2(Input.GetAxis("Horizontal" + playerNumber), Input.GetAxis("Vertical" + playerNumber)));
         }
+
+
+       
 
         private void FixedUpdate()
         { 
