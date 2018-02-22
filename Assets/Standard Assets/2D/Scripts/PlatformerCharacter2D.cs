@@ -58,13 +58,13 @@ namespace UnityStandardAssets._2D
 				{
 					slowTime = true;
 					timeManager.SlowDownTime();
-					print ("Slow time");
+
 				} 
 				else 
 				{
 					slowTime = false;
 					timeManager.NormalTime ();
-					print ("Normal time");
+
 				}
 			}
 
@@ -154,7 +154,7 @@ namespace UnityStandardAssets._2D
 				timeManager.SlowDownTime ();
 
 				slowTime = true;
-				print ("Slow time");
+
 
 				//Time.timeScale = 0.1f;
 
@@ -177,10 +177,10 @@ namespace UnityStandardAssets._2D
 
         public void Move(Vector2 jumpDirection, bool jump)
         {
-			if (m_Grounded) 
+			if (m_Grounded) // needs to activate for each player
 			{
-				slowTime = false;
-				timeManager.NormalTime ();
+				//slowTime = false;
+				//timeManager.NormalTime ();
 			} 
 				
             // If the player should jump...
@@ -203,7 +203,7 @@ namespace UnityStandardAssets._2D
 				timeManager.NormalTime();
 
 				slowTime = false;
-				print ("Normal time");
+
 
                 GameObject ballInstance = Instantiate(m_BallPrefab);
 
