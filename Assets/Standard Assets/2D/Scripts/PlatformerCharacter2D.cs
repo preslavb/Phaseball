@@ -12,6 +12,10 @@ namespace UnityStandardAssets._2D
     public class PlatformerCharacter2D : MonoBehaviour
     {
         public int playerNumber = 1;
+		int playerWithBall;
+
+
+
 		public TimeManager timeManager;
 
         [SerializeField] private float m_MaxSpeed = 10f;                    // The fastest the player can travel in the x axis.
@@ -45,8 +49,10 @@ namespace UnityStandardAssets._2D
             m_LeftCheck = transform.Find("GroundCheck (1)");
             m_RightCheck = transform.Find("GroundCheck (2)");
             m_CeilingCheck = transform.Find("CeilingCheck");
-            m_Anim = GetComponent<Animator>();
+            
+			m_Anim = GetComponent<Animator>();
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
+
         }
 
         private void Update()
@@ -57,13 +63,13 @@ namespace UnityStandardAssets._2D
 				if (!slowTime) 
 				{
 					slowTime = true;
-					timeManager.SlowDownTime();
+					//timeManager.SlowDownTime();
 
 				} 
 				else 
 				{
 					slowTime = false;
-					timeManager.NormalTime ();
+					//timeManager.NormalTime ();
 
 				}
 			}
@@ -151,12 +157,17 @@ namespace UnityStandardAssets._2D
             {
                 hasBallControl = true;
 
-				timeManager.SlowDownTime ();
+				playerWithBall = this.playerNumber;
+				//print (playerWithBall);
 
-				slowTime = true;
+				//if (m_Grounded == false && hasBallControl)
+				if (hasBallControl)
+				{
+					print ("Slow time colision with ball Player with ball: " + this.playerNumber.ToString ());
+					timeManager.SlowDownTime ();
+					slowTime = true;
 
-
-				//Time.timeScale = 0.1f;
+				} 
 
                 BallManager.hasBallBeenTouched = true;
 
@@ -171,18 +182,20 @@ namespace UnityStandardAssets._2D
                 m_Grounded = true;
                 m_Rigidbody2D.gravityScale = 0;
                 m_FallCooldown = 2;
+
+				if (hasBallControl) 
+				{
+					timeManager.NormalTime ();
+					slowTime = false;
+					print ("Normal time colision not ball, Player with ball: " + this.playerNumber.ToString());
+				}
+
             }
         }
 
-
         public void Move(Vector2 jumpDirection, bool jump)
         {
-			if (m_Grounded) // needs to activate for each player
-			{
-				//slowTime = false;
-				//timeManager.NormalTime ();
-			} 
-				
+
             // If the player should jump...
             if (m_Grounded && jump && m_Anim.GetBool("Ground") && m_JumpCooldown <= 0 && !hasBallControl)
             {
@@ -242,7 +255,6 @@ namespace UnityStandardAssets._2D
                 parabolaVertices.Add((Vector2)gameObject.transform.position + FindPointOnParabola(jumpDirection * m_JumpForce / 2, i));
 
             }
-			/////debug log 
             //Debug.Log(jumpDirection + ", " + m_JumpForce + ", " + m_Rigidbody2D.velocity.magnitude);
             
 			for (int i = 1; i < parabolaVertices.Count; i++)
