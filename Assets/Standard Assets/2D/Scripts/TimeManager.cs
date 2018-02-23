@@ -10,7 +10,7 @@ public class TimeManager : MonoBehaviour
 	{
 		Time.timeScale = slowFactor;
 		Time.fixedDeltaTime = Time.timeScale * 0.02f;
-		print ("Slow time script");
+		print ("Slow time to: " + slowFactor.ToString());
 	}
 
 	public void NormalTime()
