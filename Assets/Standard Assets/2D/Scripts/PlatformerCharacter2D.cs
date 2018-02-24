@@ -14,7 +14,7 @@ namespace UnityStandardAssets._2D
         public int playerNumber = 1;
 		int playerWithBall;
 
-
+		bool jumped;
 
 		public TimeManager timeManager;
 
@@ -57,22 +57,26 @@ namespace UnityStandardAssets._2D
 
         private void Update()
         {
+			/*
+			if(this.jumped == true)
+			{
+				print ("Player "  + this.playerNumber.ToString() + " is no longer on the ground");
+			}
 			//Test: Toggle timescale
 			if(Input.GetButtonDown("Fire1"))
 			{
 				if (!slowTime) 
 				{
 					slowTime = true;
-					//timeManager.SlowDownTime();
-
+					timeManager.SlowDownTime();
 				} 
 				else 
 				{
 					slowTime = false;
-					//timeManager.NormalTime ();
-
+					timeManager.NormalTime ();
 				}
 			}
+			*/
 
             if (m_JumpCooldown > 0)
             {
@@ -106,8 +110,10 @@ namespace UnityStandardAssets._2D
             Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
             for (int i = 0; i < colliders.Length; i++)
             {
-                if (colliders[i].gameObject != gameObject)
-                    m_Grounded = true;
+				if (colliders [i].gameObject != gameObject) 
+				{
+					m_Grounded = true;
+				}
             }
 
             //colliders = Physics2D.OverlapCircleAll(m_LeftCheck.position, k_GroundedRadius, m_WhatIsGround);
@@ -158,16 +164,14 @@ namespace UnityStandardAssets._2D
                 hasBallControl = true;
 
 				playerWithBall = this.playerNumber;
-				//print (playerWithBall);
 
-				//if (m_Grounded == false && hasBallControl)
-				if (hasBallControl)
-				{
-					print ("Slow time colision with ball Player with ball: " + this.playerNumber.ToString ());
-					timeManager.SlowDownTime ();
-					slowTime = true;
-
-				} 
+				if( this.jumped == true)
+					{
+						//print ("Player " + this.playerNumber.ToString() + " is not on the ground");
+						//print ("Slow time colision with ball Player with ball: " + this.playerNumber.ToString ());
+						timeManager.SlowDownTime ();
+						slowTime = true;
+					}
 
                 BallManager.hasBallBeenTouched = true;
 
@@ -180,6 +184,7 @@ namespace UnityStandardAssets._2D
             {
                 m_Rigidbody2D.velocity = Vector2.zero;
                 m_Grounded = true;
+				jumped = false;
                 m_Rigidbody2D.gravityScale = 0;
                 m_FallCooldown = 2;
 
@@ -187,7 +192,7 @@ namespace UnityStandardAssets._2D
 				{
 					timeManager.NormalTime ();
 					slowTime = false;
-					print ("Normal time colision not ball, Player with ball: " + this.playerNumber.ToString());
+					//print ("Normal time colision not ball, Player with ball: " + this.playerNumber.ToString());
 				}
 
             }
@@ -201,6 +206,7 @@ namespace UnityStandardAssets._2D
             {
                 // Add a vertical force to the player.
                 m_Grounded = false;
+				jumped = true;
                 m_JumpCooldown = 0.5f;
                 m_Anim.SetBool("Ground", false);
                 m_Rigidbody2D.velocity = (jumpDirection * m_JumpForce);
