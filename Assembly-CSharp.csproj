@@ -54,7 +54,7 @@
      <Compile Include="Assets\ArcManager.cs" />
      <Compile Include="Assets\BallManager.cs" />
      <Compile Include="Assets\BallScript.cs" />
-     <Compile Include="Assets\Score.cs" />
+     <Compile Include="Assets\ScoreControll.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>F:/uni/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
