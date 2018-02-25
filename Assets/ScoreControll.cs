@@ -13,7 +13,7 @@ public class ScoreControll : MonoBehaviour {
     private int scoreText1;
     private int scoreText2;
 
-
+    //
 
 
     public int player1Score = 0;
