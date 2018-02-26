@@ -38,6 +38,7 @@ public class TimerScript : MonoBehaviour
 		if (timer <= 0) {
 			timer = 0;
 			timerDisplay.text = "Match Over";
+			//Application.LoadLevel("EndMenu");
 		} else 
 		{
 			timerDisplay.text = minutes +" : "+ seconds;
