@@ -9,7 +9,6 @@ public class ScoreControll : MonoBehaviour {
 
     public GameObject Goal;
     public GameObject Goal1;
-    public GameObject ball;
     private int scoreText1;
     private int scoreText2;
 
@@ -23,10 +22,10 @@ public class ScoreControll : MonoBehaviour {
 	void Start () {
 
       
-        ball = GameObject.Find("Ball");
+        
         Goal = GameObject.Find("Goal");
         Goal1 = GameObject.Find("Goal1");
-
+        GameObject.Find("Ball");
         
 
     }
@@ -36,13 +35,13 @@ public class ScoreControll : MonoBehaviour {
     {
         int playerNumberWhoScored = 0;
 
-        if (ball.gameObject.tag == "Goal1") 
+        if (Goal.gameObject.tag == "Ball") 
         {
             scoreText1++;
             
         }
 
-        if (ball.gameObject.tag == "Goal")
+        if (Goal1.gameObject.tag == "Ball")
         {
             scoreText2++;
             
