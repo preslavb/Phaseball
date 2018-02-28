@@ -762,7 +762,7 @@ MonoBehaviour:
   playerCharacterScript: {fileID: 0}
   velocity: 15
   angle: 45
-  resolution: 10
+  resolution: 20
 --- !u!120 &1164559745
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -1117,7 +1117,7 @@ MonoBehaviour:
   playerCharacterScript: {fileID: 0}
   velocity: 5
   angle: 45
-  resolution: 10
+  resolution: 20
 --- !u!1001 &1485557728
 Prefab:
   m_ObjectHideFlags: 0
