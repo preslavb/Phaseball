@@ -8,7 +8,9 @@ namespace UnityStandardAssets._2D
     public class Platformer2DUserControl : MonoBehaviour
     {
         private PlatformerCharacter2D m_Character;
-        private bool m_Jump;
+        public bool m_Jump;
+        public float h;
+        public float v;
 
 
         private void Awake()
@@ -23,8 +25,8 @@ namespace UnityStandardAssets._2D
             // Read the jump input in Update so button presses aren't missed.
             m_Jump = CrossPlatformInputManager.GetButtonDown("Jump" + m_Character.playerNumber);
 
-            float h = CrossPlatformInputManager.GetAxis("Horizontal" + m_Character.playerNumber);
-            float v = CrossPlatformInputManager.GetAxis("Vertical" + m_Character.playerNumber);
+            h = CrossPlatformInputManager.GetAxis("Horizontal" + m_Character.playerNumber);
+            v = CrossPlatformInputManager.GetAxis("Vertical" + m_Character.playerNumber);
 
             Vector2 jumpVector = new Vector2(h, v);
 

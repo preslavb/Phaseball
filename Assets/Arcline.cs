@@ -19,14 +19,14 @@ public class Arcline : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (Input.GetAxis("Horizontal") != 0 &&  Arc == false)
+        if (Input.GetAxis("Horizontal1") != 0 &&  Arc == false)
         {
             
             Arc = true;
         }
         
 
-        if (Input.GetAxis ("Vertical") != 0 && Arc == false)
+        if (Input.GetAxis ("Vertical1") != 0 && Arc == false)
         {
 
             Arc = true;

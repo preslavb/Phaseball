@@ -603,13 +603,13 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1106351628}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8b3834c99c9c53408f267a12a7be994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   selectedObject: {fileID: 1164559743}
-  playerNumber: 1
+  Arc: 0
 --- !u!1001 &1123670778
 Prefab:
   m_ObjectHideFlags: 0
@@ -746,7 +746,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1164559744
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -758,7 +758,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 509d65ba55f719e4192677b3091ee450, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: 5
+  playerController: {fileID: 0}
+  playerCharacterScript: {fileID: 0}
+  velocity: 15
   angle: 45
   resolution: 10
 --- !u!120 &1164559745
@@ -1111,6 +1113,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 509d65ba55f719e4192677b3091ee450, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerController: {fileID: 0}
+  playerCharacterScript: {fileID: 0}
   velocity: 5
   angle: 45
   resolution: 10
@@ -1240,13 +1244,13 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1806380160}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8b3834c99c9c53408f267a12a7be994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   selectedObject: {fileID: 1452120563}
-  playerNumber: 1
+  Arc: 0
 --- !u!1001 &2051865398
 Prefab:
   m_ObjectHideFlags: 0

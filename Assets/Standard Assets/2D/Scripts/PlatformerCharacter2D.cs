@@ -14,7 +14,7 @@ namespace UnityStandardAssets._2D
         public int playerNumber = 1;
 
         [SerializeField] private float m_MaxSpeed = 10f;                    // The fastest the player can travel in the x axis.
-        [SerializeField] private float m_JumpForce = 400f;                  // Amount of force added when the player jumps.
+        [SerializeField] public float m_JumpForce = 400f;                  // Amount of force added when the player jumps.
         [Range(0, 1)] [SerializeField] private float m_CrouchSpeed = .36f;  // Amount of maxSpeed applied to crouching movement. 1 = 100%
         [SerializeField] private bool m_AirControl = false;                 // Whether or not a player can steer while jumping;
         [SerializeField] private LayerMask m_WhatIsGround;                  // A mask determining what is ground to the character
@@ -68,9 +68,11 @@ namespace UnityStandardAssets._2D
                 m_Rigidbody2D.gravityScale = 10;
             }
 
-			if (m_Grounded && !hasBallControl)DrawParabola((new Vector2(Input.GetAxis("Horizontal" + playerNumber), Input.GetAxis("Vertical" + playerNumber))), 10);
+			if (m_Grounded && !hasBallControl)DrawParabola((new Vector2(Input.GetAxis("Horizontal" + playerNumber), Input.GetAxis("Vertical" + playerNumber)).normalized), 10);
 		
-			if (hasBallControl) DrawThrowLine(new Vector2(Input.GetAxis("Horizontal" + playerNumber), Input.GetAxis("Vertical" + playerNumber)));
+			if (hasBallControl) DrawThrowLine(new Vector2(Input.GetAxis("Horizontal" + playerNumber), Input.GetAxis("Vertical" + playerNumber)).normalized);
+
+            Debug.Log(m_Rigidbody2D.velocity.y);
         }
 
         private void FixedUpdate()
@@ -208,7 +210,7 @@ namespace UnityStandardAssets._2D
             for (float i = 0; i < complexityPerSecond * numberOfSeconds; i += 0.1f)
             {
 
-                parabolaVertices.Add((Vector2)gameObject.transform.position + FindPointOnParabola(jumpDirection * m_JumpForce / 2, i));
+                parabolaVertices.Add((Vector2)gameObject.transform.position + FindPointOnParabola(jumpDirection * m_JumpForce, i));
 
             }
 			/////debug log 

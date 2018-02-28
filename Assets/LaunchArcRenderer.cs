@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput.PlatformSpecific;
 using UnityEngine.EventSystems;
 using UnityStandardAssets;
+using UnityStandardAssets._2D;
 
 [RequireComponent(typeof(LineRenderer))]
 public class LaunchArcRenderer : MonoBehaviour
@@ -11,11 +12,12 @@ public class LaunchArcRenderer : MonoBehaviour
 
     LineRenderer lr;
 
-    
+    public Platformer2DUserControl playerController;
+    public PlatformerCharacter2D playerCharacterScript;
  
     public float velocity;
     public float angle;
-    public int resolution = 10;
+    public int resolution = 20;
   
     
 
@@ -24,16 +26,10 @@ public class LaunchArcRenderer : MonoBehaviour
     float radianAngle;
     void Awake()
     {
+        playerController = gameObject.transform.parent.GetComponent<Platformer2DUserControl>();
+        playerCharacterScript = gameObject.transform.parent.GetComponent<PlatformerCharacter2D>();
         lr = GetComponent<LineRenderer>();
         g = Mathf.Abs(Physics2D.gravity.y);
-    }
-
-    void OnValidate()
-    {
-        if (lr !=null && Application.isPlaying)
-        {
-            RenderArc();
-        }
     }
 
 
@@ -54,29 +50,30 @@ public class LaunchArcRenderer : MonoBehaviour
 
     Vector3[] CalculateArcArray()
     {
-        Vector3[] arcArray = new Vector3[resolution + 1];
+        List<Vector3> arcArray = new List<Vector3>(resolution * 4 + 1);
 
-        radianAngle = Mathf.Deg2Rad * angle;
-        float maxDistance = (velocity * velocity * Mathf.Sin(2 * radianAngle)) / g;
-        for (int i = 0; i <= resolution; i++)
+        for (int i = 0; i <= resolution * 4; i++)
         {
             float t = (float)i / (float)resolution;
-            arcArray[i] = CalculateArcPoint(t, maxDistance);
+            arcArray.Add(FindPointOnParabola(new Vector2(playerController.h, playerController.v) * playerCharacterScript.m_JumpForce, t));
         }
 
-        return arcArray;
+        return arcArray.ToArray();
     }
 
-    Vector2 CalculateArcPoint(float t, float maxDistance)
+    private Vector2 FindPointOnParabola(Vector2 initialVelocity, float time, float gravityAcceleration = -9.81f)
     {
-        float x = t * maxDistance;
-        float y = x * Mathf.Tan(radianAngle) - ((g * x * x) / (2 * velocity * velocity * Mathf.Cos(radianAngle) * Mathf.Cos(radianAngle)));
-        return new Vector3(x, y);
+        return new Vector2(initialVelocity.x * time, (initialVelocity.y + ((gravityAcceleration * 10)/2) * time) * time);
     }
 
-    void update()
+    void Update()
     {
+        //angle = Vector2.SignedAngle(Vector2.right, new Vector2(playerCharacterScript.h, playerCharacterScript.v));
 
+        if (lr != null && Application.isPlaying)
+        {
+            RenderArc();
+        }
     }
 
 
