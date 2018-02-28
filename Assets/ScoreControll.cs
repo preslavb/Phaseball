@@ -12,7 +12,7 @@ public class ScoreControll : MonoBehaviour {
     private int scoreText1;
     private int scoreText2;
 
-    //
+    
 
 
     public int player1Score = 0;
@@ -25,7 +25,7 @@ public class ScoreControll : MonoBehaviour {
         
         Goal = GameObject.Find("Goal");
         Goal1 = GameObject.Find("Goal1");
-        GameObject.Find("Ball");
+        //GameObject.Find("Ball");
         
 
     }
@@ -35,33 +35,50 @@ public class ScoreControll : MonoBehaviour {
     {
         int playerNumberWhoScored = 0;
 
-        if (Goal.gameObject.tag == "Ball") 
-        {
-            scoreText1++;
+      
+        // if (Goal.gameObject.tag == "Ball") 
+       // {
+        // scoreText1++;
             
-        }
+       // }
 
-        if (Goal1.gameObject.tag == "Ball")
-        {
-            scoreText2++;
+       // if (Goal1.gameObject.tag == "Ball")
+       // {
+        //   scoreText2++;
             
-        }
+       // }
+
+      
+
+
 
         Debug.Log("Collision Detected");
 
         
-        print(player1Score + " - " + player2Score);
+       // print(player1Score + " - " + player2Score);
 
         
     }
 
    
 
+   
+
 
     void OnTriggerEnter(Collider coll)
     {
-        scoreText1 = scoreText1 + 1;
-        scoreText2 = scoreText2 + 1;
+        if(coll.gameObject.tag == "Goal")
+        {
+            scoreText1 = scoreText1 + 1;
+        }
+
+        if(coll.gameObject.tag == "Goal1")
+        {
+            scoreText2 = scoreText2 + 1;
+        }
+
+        //scoreText1 = scoreText1 + 1;
+        //scoreText2 = scoreText2 + 1;
     }
 
     
