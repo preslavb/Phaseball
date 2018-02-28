@@ -18,8 +18,10 @@ public class LaunchArcRenderer : MonoBehaviour
     public float velocity;
     public float angle;
     public int resolution = 20;
-  
-    
+
+
+    public Transform originalObject;
+    public Transform reflectedObject;
 
 
     float g; // force of gravity of y axis
@@ -65,15 +67,43 @@ public class LaunchArcRenderer : MonoBehaviour
     {
         return new Vector2(initialVelocity.x * time, (initialVelocity.y + ((gravityAcceleration * 10)/2) * time) * time);
     }
+    
+
+    
 
     void Update()
     {
-        //angle = Vector2.SignedAngle(Vector2.right, new Vector2(playerCharacterScript.h, playerCharacterScript.v));
 
+       
+       
+        //angle = Vector2.SignedAngle(Vector2.right, new Vector2(playerCharacterScript.h, playerCharacterScript.v));
         if (lr != null && Application.isPlaying)
         {
             RenderArc();
         }
+
+        reflectedObject.position = Vector3.Reflect(originalObject.position, Vector3.right);
+
+       // RaycastHit hit;
+
+       // if (Physics.Raycast(transform.position, Vector3.forward, out hit, Mathf.Infinity))
+        //{
+        //    lr.enabled = true; ;
+        //    lr.SetPosition(0, transform.position);
+       //     lr.SetPosition(1, hit.point);
+
+       // }
+
+      //  if (hit.collider.tag == "ExtentsLeft, ExtentsLeft (1), ExtentsLeft (2), ExtentsLeft (3), ExtentsLeft (4), ExtentsLeft (5), ExtentsLeft (6), ExtentsLeft (7), ExtentsLeft (8), ExtentsLeft (9), ExtentsLeft (10), ExtentsLeft (11), ExtentsLeft (12)")
+      //  {
+        //    Vector3 pos = Vector3.Reflect(hit.point - transform.position, hit.normal);
+        //    lr.SetPosition(2, pos);
+            //lr.SetPosition(3, pos);
+       // }
+
+
+
+
     }
 
 
