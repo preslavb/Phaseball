@@ -2,6 +2,8 @@
 using System.Collections;
 using UnityEngine.UI;
 
+using UnityEngine.EventSystems;
+
 public class TimerScript : MonoBehaviour
 { 
 	public float matchLengthMinutes = 5;
@@ -13,7 +15,8 @@ public class TimerScript : MonoBehaviour
 
     public Text timerDisplay;
 
-	public GameObject resetButton;
+	public GameObject reset;
+	public Button resetButton; 
 
 	// Initialization of the timer 
 	void Start ()
@@ -26,7 +29,7 @@ public class TimerScript : MonoBehaviour
 
 		timerDisplay.text = minutes +" : "+ seconds;
 
-		resetButton.SetActive (false);
+		reset.SetActive (false);
 	}
 	
 	// Each frame the delta time is subtracted from the timer and when it is less than or equal to 0 the EndMenu scene is loaded
@@ -43,7 +46,10 @@ public class TimerScript : MonoBehaviour
 			timer = 0;
 			timerDisplay.text = "Match Over";
 
-			resetButton.SetActive(true);
+			reset.SetActive(true);
+			resetButton.Select();
+			resetButton.OnSelect (null);
+			//EventSystem.current.SetSelectedGameObject(reset);
 			Time.timeScale = 0;
 
 
