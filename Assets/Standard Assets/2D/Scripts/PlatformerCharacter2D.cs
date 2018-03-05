@@ -53,6 +53,7 @@ namespace UnityStandardAssets._2D
 			m_Anim = GetComponent<Animator>();
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
 
+            timeManager = GameObject.Find("Main Camera").GetComponent<TimeManager>();
         }
 
         private void Update()
