@@ -166,12 +166,12 @@ namespace UnityStandardAssets._2D
 				playerWithBall = this.playerNumber;
 
 				if( this.jumped == true)
-					{
-						//print ("Player " + this.playerNumber.ToString() + " is not on the ground");
-						//print ("Slow time colision with ball Player with ball: " + this.playerNumber.ToString ());
-						timeManager.SlowDownTime ();
-						slowTime = true;
-					}
+				{
+					//print ("Player " + this.playerNumber.ToString() + " is not on the ground");
+					//print ("Slow time colision with ball Player with ball: " + this.playerNumber.ToString ());
+					timeManager.SlowDownTime();
+					slowTime = true;
+				}
 
                 BallManager.hasBallBeenTouched = true;
 
@@ -180,7 +180,7 @@ namespace UnityStandardAssets._2D
                 Destroy(collision.gameObject);
             }
 
-            if (collision.gameObject.name != "Ball" && collision.gameObject.layer != 8)
+            if (collision.gameObject.name != "Ball" && collision.gameObject.layer == 9)
             {
                 m_Rigidbody2D.velocity = Vector2.zero;
                 m_Grounded = true;
@@ -190,11 +190,10 @@ namespace UnityStandardAssets._2D
 
 				if (hasBallControl) 
 				{
-					timeManager.NormalTime ();
+					timeManager.NormalTime();
 					slowTime = false;
 					//print ("Normal time colision not ball, Player with ball: " + this.playerNumber.ToString());
 				}
-
             }
         }
 
