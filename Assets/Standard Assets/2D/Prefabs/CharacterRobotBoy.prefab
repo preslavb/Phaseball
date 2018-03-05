@@ -108,7 +108,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 1
@@ -195,8 +195,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNumber: 1
+  timeManager: {fileID: 0}
   m_MaxSpeed: 10
-  m_JumpForce: 30
+  m_JumpForce: 40
   m_CrouchSpeed: 0.25
   m_AirControl: 0
   m_WhatIsGround:
@@ -207,6 +208,7 @@ MonoBehaviour:
   m_FallCooldown: 2
   m_BallPrefab: {fileID: 1529153454364506, guid: 79b616798b394e8439ba1310555b97d1,
     type: 2}
+  slowTime: 0
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

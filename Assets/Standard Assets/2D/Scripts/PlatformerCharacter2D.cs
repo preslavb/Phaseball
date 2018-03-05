@@ -12,6 +12,11 @@ namespace UnityStandardAssets._2D
     public class PlatformerCharacter2D : MonoBehaviour
     {
         public int playerNumber = 1;
+		int playerWithBall;
+
+		bool jumped;
+
+		public TimeManager timeManager;
 
         [SerializeField] private float m_MaxSpeed = 10f;                    // The fastest the player can travel in the x axis.
         [SerializeField] public float m_JumpForce = 400f;                  // Amount of force added when the player jumps.
@@ -35,20 +40,44 @@ namespace UnityStandardAssets._2D
         private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 
         private bool hasBallControl = false;
-
-        private void Awake()
+		public bool slowTime = false; // used to keep track if time is slow or not.
+        
+		private void Awake()
         {
             // Setting up references.
             m_GroundCheck = transform.Find("GroundCheck");
             m_LeftCheck = transform.Find("GroundCheck (1)");
             m_RightCheck = transform.Find("GroundCheck (2)");
             m_CeilingCheck = transform.Find("CeilingCheck");
-            m_Anim = GetComponent<Animator>();
+            
+			m_Anim = GetComponent<Animator>();
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
+
         }
 
         private void Update()
         {
+			/*
+			if(this.jumped == true)
+			{
+				print ("Player "  + this.playerNumber.ToString() + " is no longer on the ground");
+			}
+			//Test: Toggle timescale
+			if(Input.GetButtonDown("Fire1"))
+			{
+				if (!slowTime) 
+				{
+					slowTime = true;
+					timeManager.SlowDownTime();
+				} 
+				else 
+				{
+					slowTime = false;
+					timeManager.NormalTime ();
+				}
+			}
+			*/
+
             if (m_JumpCooldown > 0)
             {
                 m_JumpCooldown -= Time.deltaTime;
@@ -83,8 +112,10 @@ namespace UnityStandardAssets._2D
             Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
             for (int i = 0; i < colliders.Length; i++)
             {
-                if (colliders[i].gameObject != gameObject)
-                    m_Grounded = true;
+				if (colliders [i].gameObject != gameObject) 
+				{
+					m_Grounded = true;
+				}
             }
 
             //colliders = Physics2D.OverlapCircleAll(m_LeftCheck.position, k_GroundedRadius, m_WhatIsGround);
@@ -133,8 +164,16 @@ namespace UnityStandardAssets._2D
             if (collision.gameObject.name == "Ball" && m_BallCooldown <= 0)
             {
                 hasBallControl = true;
-                
-				//Time.timeScale = 0.1f;
+
+				playerWithBall = this.playerNumber;
+
+				if( this.jumped == true)
+				{
+					//print ("Player " + this.playerNumber.ToString() + " is not on the ground");
+					//print ("Slow time colision with ball Player with ball: " + this.playerNumber.ToString ());
+					timeManager.SlowDownTime();
+					slowTime = true;
+				}
 
                 BallManager.hasBallBeenTouched = true;
 
@@ -143,28 +182,32 @@ namespace UnityStandardAssets._2D
                 Destroy(collision.gameObject);
             }
 
-            if (collision.gameObject.name != "Ball" && collision.gameObject.layer != 8)
+            if (collision.gameObject.name != "Ball" && collision.gameObject.layer == 9)
             {
                 m_Rigidbody2D.velocity = Vector2.zero;
                 m_Grounded = true;
+				jumped = false;
                 m_Rigidbody2D.gravityScale = 0;
                 m_FallCooldown = 2;
+
+				if (hasBallControl) 
+				{
+					timeManager.NormalTime();
+					slowTime = false;
+					//print ("Normal time colision not ball, Player with ball: " + this.playerNumber.ToString());
+				}
             }
         }
 
-
         public void Move(Vector2 jumpDirection, bool jump)
         {
-			if (m_Grounded && hasBallControl) 
-			{
-				Time.timeScale = 1.0f;
-			}
 
             // If the player should jump...
             if (m_Grounded && jump && m_Anim.GetBool("Ground") && m_JumpCooldown <= 0 && !hasBallControl)
             {
                 // Add a vertical force to the player.
                 m_Grounded = false;
+				jumped = true;
                 m_JumpCooldown = 0.5f;
                 m_Anim.SetBool("Ground", false);
                 m_Rigidbody2D.velocity = (jumpDirection * m_JumpForce);
@@ -176,6 +219,12 @@ namespace UnityStandardAssets._2D
             {
                 //TODO: Implement throwing
                 hasBallControl = false;
+
+				timeManager.NormalTime();
+
+				slowTime = false;
+
+
                 GameObject ballInstance = Instantiate(m_BallPrefab);
 
                 ballInstance.transform.position = gameObject.transform.position;
@@ -213,7 +262,6 @@ namespace UnityStandardAssets._2D
                 parabolaVertices.Add((Vector2)gameObject.transform.position + FindPointOnParabola(jumpDirection * m_JumpForce, i));
 
             }
-			/////debug log 
             //Debug.Log(jumpDirection + ", " + m_JumpForce + ", " + m_Rigidbody2D.velocity.magnitude);
             
 			for (int i = 1; i < parabolaVertices.Count; i++)
