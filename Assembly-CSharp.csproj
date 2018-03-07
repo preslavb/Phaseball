@@ -53,7 +53,7 @@
   <ItemGroup>
      <Compile Include="Assets\Arcline.cs" />
      <Compile Include="Assets\ArcManager.cs" />
-     <Compile Include="Assets\ScoreControll.cs" />
+     <Compile Include="Assets\ScoreControl.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>F:/uni/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
