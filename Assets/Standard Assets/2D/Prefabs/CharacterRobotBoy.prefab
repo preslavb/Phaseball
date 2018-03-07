@@ -73,8 +73,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11, y: -6.43, z: 0}
-  m_LocalScale: {x: 1.7715329, y: 1.7715304, z: 1}
+  m_LocalPosition: {x: -4.6, y: -3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4857831151052012}
   - {fileID: 400004}
@@ -129,7 +129,7 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.45}
+  m_Offset: {x: -0.09, y: -0.36}
   serializedVersion: 2
   m_Radius: 0.16
 --- !u!61 &6100000
@@ -144,18 +144,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.107019186, y: -0.0147615075}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.375, y: 1.375}
+    oldSize: {x: 0.82, y: 1.01}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.25, y: 0.68}
+  m_Size: {x: 0.22785807, y: 0.65047705}
   m_EdgeRadius: 0
 --- !u!95 &9500000
 Animator:
@@ -164,7 +164,7 @@ Animator:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 5fc43f0c4b413534ba12c51c0e5e5f6f, type: 2}
   m_CullingMode: 0
@@ -203,6 +203,7 @@ MonoBehaviour:
   timeManager: {fileID: 0}
   m_MaxSpeed: 10
   m_JumpForce: 40
+  m_BallForce: 10
   m_CrouchSpeed: 0.25
   m_AirControl: 0
   m_WhatIsGround:
@@ -248,7 +249,7 @@ SpriteRenderer:
   m_SortingLayerID: -1783731295
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 8fb98a6035269e64a998f9b56828fc4f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1482fda9361df284f88092756366b7f2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -324,7 +325,7 @@ Transform:
   m_GameObject: {fileID: 1276355935558372}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.66, y: 0.56448364, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400002}
   m_RootOrder: 4

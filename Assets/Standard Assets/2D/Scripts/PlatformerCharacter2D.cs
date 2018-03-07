@@ -13,7 +13,7 @@ namespace UnityStandardAssets._2D
 	{
 		public int playerNumber = 1;
 		int playerWithBall;
-
+		public float defaultGravity = 5;
 		bool jumped;
 
 		public TimeManager timeManager;
@@ -174,7 +174,7 @@ namespace UnityStandardAssets._2D
 				collision.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(
 					-collision.gameObject.GetComponent<Rigidbody2D>().velocity.x,
 					collision.gameObject.GetComponent<Rigidbody2D>().velocity.y);
-				m_Rigidbody2D.gravityScale = 10;
+				m_Rigidbody2D.gravityScale = defaultGravity;
 			}
 		}
 
@@ -196,7 +196,7 @@ namespace UnityStandardAssets._2D
 
 				BallManager.hasBallBeenTouched = true;
 
-				m_BallCooldown = 0.05f;
+				m_BallCooldown = 0;
 
 				Destroy(other.gameObject.transform.parent.gameObject);
 			}
@@ -216,7 +216,7 @@ namespace UnityStandardAssets._2D
 				m_Rigidbody2D.velocity = (jumpDirection * m_JumpForce);
 
 				m_FallCooldown = 0;
-				m_Rigidbody2D.gravityScale = 10;
+				m_Rigidbody2D.gravityScale = defaultGravity;
 			}
 
 			else if (hasBallControl && jump && m_BallCooldown <= 0)

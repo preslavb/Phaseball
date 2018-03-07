@@ -30,10 +30,6 @@ public class LaunchArcRenderer : MonoBehaviour
         g = Mathf.Abs(Physics2D.gravity.y);
     }
 
-
-  
-
-
     // Use this for initialization
     void Start()
     {
@@ -42,7 +38,7 @@ public class LaunchArcRenderer : MonoBehaviour
 
     void RenderArc()
     {
-        lr.SetVertexCount(resolution + 1);
+        lr.SetVertexCount((resolution * 4) + 1);
         lr.SetPositions(CalculateArcArray());
     }
 
@@ -61,7 +57,7 @@ public class LaunchArcRenderer : MonoBehaviour
 
     private Vector2 FindPointOnParabola(Vector2 initialVelocity, float time, float gravityAcceleration = -9.81f)
     {
-        return new Vector2(initialVelocity.x * time, (initialVelocity.y + ((gravityAcceleration * 10)/2) * time) * time);
+        return new Vector2(initialVelocity.x * time, (initialVelocity.y + ((gravityAcceleration * playerCharacterScript.defaultGravity)/2) * time) * time);
     }
     
 
