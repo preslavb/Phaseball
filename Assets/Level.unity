@@ -967,6 +967,7 @@ GameObject:
   - component: {fileID: 1257976396}
   - component: {fileID: 1257976395}
   - component: {fileID: 1257976399}
+  - component: {fileID: 1257976400}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1062,9 +1063,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 381c3f24ea3fbad4080e40c19e3f8874, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1257976400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1257976394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 385a2d3bba13fb84ab0e5f12125ef5d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   Goal: {fileID: 1518812157}
   Goal1: {fileID: 1232943610}
-  Ball: {fileID: 1420389555}
   player1Score: 0
   player2Score: 0
 --- !u!1001 &1398383952
@@ -1183,11 +1194,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0eb16b4b3e362ef4f97494dd0e686c46, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1420389555 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1529153454364506, guid: 79b616798b394e8439ba1310555b97d1,
-    type: 2}
-  m_PrefabInternal: {fileID: 814689218}
 --- !u!1001 &1485557728
 Prefab:
   m_ObjectHideFlags: 0

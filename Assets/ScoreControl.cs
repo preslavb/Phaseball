@@ -54,11 +54,12 @@ public class ScoreControl : MonoBehaviour
 
     void OnTriggerEnter2D(Collision2D coll)
     {
-        
 
+        if (coll.gameObject.tag == "Goal")
+        {
             if (coll.gameObject.name == "Goal")
             {
-            
+
                 scoreText1 = scoreText1 + 1;
             }
 
@@ -66,7 +67,7 @@ public class ScoreControl : MonoBehaviour
             {
                 scoreText2 = scoreText2 + 1;
             }
-          
+        }
     }
 }
 
