@@ -19,6 +19,8 @@ public class LaunchArcRenderer : MonoBehaviour
     public float angle;
     public int resolution = 20;
 
+    private Vector2 inDirection;
+
 
     float g; // force of gravity of y axis
     float radianAngle;
@@ -38,6 +40,7 @@ public class LaunchArcRenderer : MonoBehaviour
     void Start()
     {
         RenderArc();
+        inDirection = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
     }
 
     void RenderArc()
@@ -76,9 +79,21 @@ public class LaunchArcRenderer : MonoBehaviour
             RenderArc();
         }
 
+        
+       
+
     }
 
-    
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        var contactPoint = collision.contacts[0].point;
+        Vector2 lrlocation = transform.position;
+        var inNormal = (lrlocation - contactPoint).normalized;
+        inDirection = Vector2.Reflect(inDirection, inNormal);
+    }
+
+
+
 
 
 
