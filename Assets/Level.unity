@@ -919,7 +919,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -1064,6 +1064,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Goal: {fileID: 1518812157}
   Goal1: {fileID: 1232943610}
+  Ball: {fileID: 1420389555}
   player1Score: 0
   player2Score: 0
 --- !u!1001 &1398383952
@@ -1182,6 +1183,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0eb16b4b3e362ef4f97494dd0e686c46, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1420389555 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1529153454364506, guid: 79b616798b394e8439ba1310555b97d1,
+    type: 2}
+  m_PrefabInternal: {fileID: 814689218}
 --- !u!1001 &1485557728
 Prefab:
   m_ObjectHideFlags: 0
@@ -1305,7 +1311,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
