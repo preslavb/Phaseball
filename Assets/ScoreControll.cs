@@ -24,7 +24,6 @@ public class ScoreControll : MonoBehaviour {
 		
 		Goal = GameObject.Find("Goal");
 		Goal1 = GameObject.Find("Goal1");
-		GameObject.Find("Ball");
 		
 
 	}
@@ -32,6 +31,7 @@ public class ScoreControll : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
 	{
+<<<<<<< HEAD
 		//int playerNumberWhoScored = 0;
 
 	  
@@ -69,6 +69,10 @@ public class ScoreControll : MonoBehaviour {
             transform.position = gameObject.transform.position;
         }
     }
+=======
+		
+	}
+>>>>>>> origin/Score
 
    
 
@@ -77,6 +81,7 @@ public class ScoreControll : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider coll)
 	{
+<<<<<<< HEAD
 		if(Ball.gameObject.tag == "Goal1")
 		{
 			scoreText1 = scoreText1 + 1;
@@ -89,6 +94,24 @@ public class ScoreControll : MonoBehaviour {
 
 		//scoreText1 = scoreText1 + 1;
 		//scoreText2 = scoreText2 + 1;
+=======
+		if (coll.gameObject.tag == "Goal")
+		{
+			if (coll.gameObject.name == "Goal")
+			{
+				scoreText1 = scoreText1 + 1;
+			}
+
+			else
+			{
+				scoreText2 = scoreText2 + 1;
+			}
+		}
+		
+
+		scoreText1 = scoreText1 + 1;
+		scoreText2 = scoreText2 + 1;
+>>>>>>> origin/Score
 	}
 
 	
