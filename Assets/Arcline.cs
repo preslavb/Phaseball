@@ -8,34 +8,39 @@ using UnityStandardAssets;
 
 public class Arcline : MonoBehaviour {
 
-    
-    public GameObject selectedObject;
+	
+	public GameObject selectedObject;
    
-    public bool Arc;
+	public bool Arc;
 	// Use this for initialization
 	void Start () {
 		
 	}
 
-    // Update is called once per frame
-    void Update() {
-        if (Input.GetAxis("Horizontal1") != 0 &&  Arc == false)
-        {
-            
-            Arc = true;
-        }
-        
+	// Update is called once per frame
+	void Update() {
+		if (Input.GetAxis("Horizontal1") != 0 &&  Arc == false)
+		{
+			
+			Arc = true;
+		}
+		
 
-        if (Input.GetAxis ("Vertical1") != 0 && Arc == false)
-        {
+		else if (Input.GetAxis ("Vertical1") != 0 && Arc == false)
+		{
 
-            Arc = true;
-        }
+			Arc = true;
+		}
 
-    }
+		else
+		{
+			Arc = false;
+		}
 
-    private void OnDisable()
-    {
-        Arc = false;
-    }
+	}
+
+	private void OnDisable()
+	{
+		Arc = false;
+	}
 }
