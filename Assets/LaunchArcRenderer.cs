@@ -49,7 +49,7 @@ public class LaunchArcRenderer : MonoBehaviour
 
 	private Vector2 FindPointOnParabola(Vector2 initialVelocity, float time, float gravityAcceleration = -9.81f)
 	{
-		return new Vector2(initialVelocity.x * time, (initialVelocity.y + ((gravityAcceleration * 10)/2) * time) * time);
+		return new Vector2(initialVelocity.x * time, (initialVelocity.y + ((gravityAcceleration * playerCharacterScript.defaultGravity)/2) * time) * time);
 	}
 
 	Vector3[] CalculateArcArray()

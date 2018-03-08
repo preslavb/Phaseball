@@ -41,6 +41,7 @@ namespace UnityStandardAssets._2D
 		private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 
 		public bool hasBallControl = false;
+		public float defaultGravity = 10;
 		public bool slowTime = false; // used to keep track if time is slow or not.
 		
 		private void Awake()
@@ -174,7 +175,7 @@ namespace UnityStandardAssets._2D
 				collision.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(
 					-collision.gameObject.GetComponent<Rigidbody2D>().velocity.x,
 					collision.gameObject.GetComponent<Rigidbody2D>().velocity.y);
-				m_Rigidbody2D.gravityScale = 10;
+				m_Rigidbody2D.gravityScale = defaultGravity;
 			}
 		}
 
@@ -216,7 +217,7 @@ namespace UnityStandardAssets._2D
 				m_Rigidbody2D.velocity = (jumpDirection * m_JumpForce);
 
 				m_FallCooldown = 0;
-				m_Rigidbody2D.gravityScale = 10;
+				m_Rigidbody2D.gravityScale = defaultGravity;
 			}
 
 			else if (hasBallControl && jump && m_BallCooldown <= 0)
