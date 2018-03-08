@@ -99,56 +99,7 @@ namespace UnityStandardAssets._2D
 		private void FixedUpdate()
 		{ 
 
-			// The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
-			// This can be done using layers instead but Sample Assets will not overwrite your project settings.
-			Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
-			for (int i = 0; i < colliders.Length; i++)
-			{
-				if (colliders [i].gameObject != gameObject) 
-				{
-					m_Grounded = true;
-				}
-			}
-
-			//colliders = Physics2D.OverlapCircleAll(m_LeftCheck.position, k_GroundedRadius, m_WhatIsGround);
-			//for (int i = 0; i < colliders.Length; i++)
-			//{
-			//    if (colliders[i].gameObject != gameObject)
-			//    {
-			//        m_Grounded = true;
-			//        m_Rigidbody2D.gravityScale = 0;
-			//        m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, 0.);
-			//    } 
-			//}
-
-			//colliders = Physics2D.OverlapCircleAll(m_RightCheck.position, k_GroundedRadius, m_WhatIsGround);
-			//for (int i = 0; i < colliders.Length; i++)
-			//{
-			//    if (colliders[i].gameObject != gameObject)
-			//    {
-			//        m_Grounded = true;
-			//        m_Rigidbody2D.gravityScale = 0;
-			//        m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, 0);
-			//    }
-			//}
-
-			//colliders = Physics2D.OverlapCircleAll(m_CeilingCheck.position, k_GroundedRadius, m_WhatIsGround);
-			//for (int i = 0; i < colliders.Length; i++)
-			//{
-			//    if (colliders[i].gameObject != gameObject)
-			//    {
-			//        m_Grounded = true;
-			//        m_Rigidbody2D.gravityScale = 0;
-			//        m_Rigidbody2D.velocity = new Vector2(0, m_Rigidbody2D.velocity.y);
-			//    }
-			//}
-
 			m_Anim.SetBool("Ground", m_Grounded);
-
-			// Set the vertical animation
-			m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
-			
-			//Debug.DrawLine(gameObject.transform.position, (Vector2)gameObject.transform.position + (new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"))) * m_JumpForce);
 		}
 
 		private void OnCollisionEnter2D(Collision2D collision)
@@ -197,7 +148,7 @@ namespace UnityStandardAssets._2D
 
 				BallManager.hasBallBeenTouched = true;
 
-				m_BallCooldown = 0.05f;
+				m_BallCooldown = timeManager.slowFactor/10;
 
 				Destroy(other.gameObject.transform.parent.gameObject);
 			}
@@ -236,10 +187,8 @@ namespace UnityStandardAssets._2D
 				ballInstance.name = "Ball";
 				ballInstance.GetComponent<Rigidbody2D>().velocity = jumpDirection * m_BallForce;
 
-				m_BallCooldown = 0.2f;
+				m_BallCooldown = 0.05f;
 				m_JumpCooldown = 0.5f;
-
-				Time.timeScale = 1;
 			}
 		}
 
