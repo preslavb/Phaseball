@@ -114,6 +114,14 @@ namespace UnityStandardAssets._2D
 				m_Rigidbody2D.gravityScale = 0;
 				m_FallCooldown = 2;
 
+				ContactPoint2D[] contactPoints = new ContactPoint2D[1];
+				collision.GetContacts(contactPoints);
+
+				if (Mathf.Abs(contactPoints[0].normal.x) > Mathf.Abs(contactPoints[0].normal.y))
+				{
+					m_Anim.SetBool("Wall", true);
+				}
+
 				if (hasBallControl)
 				{
 					timeManager.NormalTime();
@@ -167,6 +175,7 @@ namespace UnityStandardAssets._2D
 				jumped = true;
 				m_JumpCooldown = 0.5f;
 				m_Anim.SetBool("Ground", false);
+				m_Anim.SetBool("Wall", false);
 				audioSource.PlayOneShot(Resources.Load<AudioClip>("Sound/Jump"));
 				m_Rigidbody2D.velocity = (jumpDirection * m_JumpForce);
 
