@@ -43,8 +43,10 @@ public class LaunchArcRenderer : MonoBehaviour
 
 	void RenderArc()
 	{
-		lr.SetVertexCount(playerCharacterScript.hasBallControl ?  3 : resolution + 1);
-		lr.SetPositions(playerCharacterScript.hasBallControl ? CalculateReflectArray() : CalculateArcArray());
+		Vector3[] arcArray = CalculateArcArray();
+		
+		lr.positionCount = playerCharacterScript.hasBallControl ?  3 : arcArray.Length;
+		lr.SetPositions(playerCharacterScript.hasBallControl ? CalculateReflectArray() : arcArray);
 	}
 
 	private Vector2 FindPointOnParabola(Vector2 initialVelocity, float time, float gravityAcceleration = -9.81f)
@@ -54,15 +56,109 @@ public class LaunchArcRenderer : MonoBehaviour
 
 	Vector3[] CalculateArcArray()
 	{
-		List<Vector3> arcArray = new List<Vector3>(resolution * 4 + 1);
+		List<Vector3> arcArray = new List<Vector3>(resolution + 1);
+
+		Vector2 offset1 = new Vector2();
+		Vector2 offset2 = new Vector2();
+
+		Vector2 direction = new Vector2(playerController.h, playerController.v);
+		Vector2 dimensions = playerCharacterScript.gameObject.GetComponent<BoxCollider2D>().size;
+
+		if (direction.x == 0)
+		{
+			offset1 = new Vector2(-dimensions.x / 2, direction.y > 0 ? dimensions.y / 2 : -dimensions.y / 2);
+			offset2 = new Vector2(dimensions.x / 2, direction.y > 0 ? dimensions.y / 2 : -dimensions.y / 2);
+		}
+		else if (direction.y == 0)
+		{
+			offset1 = new Vector2(direction.x > 0 ? dimensions.x / 2 : -dimensions.x / 2, dimensions.y / 2);
+			offset2 = new Vector2(direction.x > 0 ? dimensions.x / 2 : -dimensions.x / 2, -dimensions.y / 2);
+		}
+		else if (direction.y > 0)
+		{
+			offset1 = new Vector2(direction.x > 0 ? -dimensions.x / 2 : dimensions.x / 2, dimensions.y / 2);
+			offset2 = new Vector2(direction.x > 0 ? dimensions.x / 2 : -dimensions.x / 2, -dimensions.y / 2);
+		}
+		else if (direction.y <= 0)
+		{
+			offset1 = new Vector2(direction.x > 0 ? dimensions.x / 2 : -dimensions.x / 2, dimensions.y / 2);
+			offset2 = new Vector2(direction.x > 0 ? -dimensions.x / 2 : dimensions.x / 2, -dimensions.y / 2);
+		}
+
+		Arc end1 = CalculateArcHits(offset1);
+		Arc end2 = CalculateArcHits(offset2);
+
+		Arc arcEndpoint = new Arc();
+		Arc otherEndpoint = new Arc();
+
+		if (end1.arcVertices < end2.arcVertices)
+		{
+			arcEndpoint = end1;
+			otherEndpoint = end2;
+		} else
+		{
+			arcEndpoint = end2;
+			otherEndpoint = end1;
+		}
+
+		Vector2 oldVector = FindPointOnParabola(direction * playerCharacterScript.m_JumpForce, 0);
+
+		for (int i = 0; i <= arcEndpoint.arcVertices; i++)
+		{
+			float t = (float)i / (float)resolution;
+			Vector2 currentVector = FindPointOnParabola(direction * playerCharacterScript.m_JumpForce, t);
+
+			RaycastHit2D raycastHit = Physics2D.Raycast((Vector2)playerCharacterScript.gameObject.transform.position + oldVector, currentVector - oldVector, Vector2.Distance(oldVector, currentVector));
+
+			if (raycastHit && raycastHit.collider.gameObject.layer == 9)
+			{
+				arcArray.Add(raycastHit.point - (Vector2)playerCharacterScript.transform.position);
+				break;
+			}
+
+			if (i == arcEndpoint.arcVertices)
+			{
+				arcArray.Add((Vector2.Lerp(arcEndpoint.raycastHit.point, playerCharacterScript.transform.position + otherEndpoint.vertices[i], 0.5f)) - (Vector2)playerCharacterScript.transform.position);
+			}
+			else
+			{
+				arcArray.Add(currentVector);
+			}
+
+			oldVector = currentVector;
+		}
+
+		return arcArray.ToArray();
+	}
+
+	Arc CalculateArcHits(Vector2 offset)
+	{
+		Arc arcEndpoint = new Arc();
+		arcEndpoint.vertices = new List<Vector3>();
+
+		Vector2 oldVector = FindPointOnParabola(new Vector2(playerController.h, playerController.v) * playerCharacterScript.m_JumpForce, 0);
 
 		for (int i = 0; i <= resolution * 4; i++)
 		{
 			float t = (float)i / (float)resolution;
-			arcArray.Add(FindPointOnParabola(new Vector2(playerController.h, playerController.v) * playerCharacterScript.m_JumpForce, t));
+			Vector2 currentVector = FindPointOnParabola(new Vector2(playerController.h, playerController.v) * playerCharacterScript.m_JumpForce, t);
+
+			RaycastHit2D raycastHit = Physics2D.Raycast((Vector2)playerCharacterScript.gameObject.transform.position + offset + oldVector, currentVector - oldVector, Vector2.Distance(oldVector, currentVector));
+
+			if (raycastHit && raycastHit.collider.gameObject.layer == 9)
+			{
+				arcEndpoint.arcVertices = i;
+				arcEndpoint.raycastHit = raycastHit;
+				arcEndpoint.vertices.Add(raycastHit.point - (Vector2)playerCharacterScript.gameObject.transform.position);
+
+				return arcEndpoint;
+			}
+
+			arcEndpoint.vertices.Add(currentVector);
+			oldVector = currentVector;
 		}
 
-		return arcArray.ToArray();
+		return new Arc();
 	}
 
 	Vector3[] CalculateReflectArray()
@@ -72,8 +168,6 @@ public class LaunchArcRenderer : MonoBehaviour
 		Vector2 direction = new Vector2(playerController.h, playerController.v);
 
 		pointsArray[0] = Vector3.zero;
-		//pointsArray[1] = new Vector3(20, 0, 0);
-		//pointsArray[2] = new Vector3(20, 20, 0);
 
 		RaycastHit2D raycast1Hit = Physics2D.Raycast(playerCharacterScript.gameObject.transform.position, direction, Mathf.Infinity, layerMask);
 
@@ -105,12 +199,11 @@ public class LaunchArcRenderer : MonoBehaviour
 
 	}
 
-
-
-
-
-
 }
 
-
-
+public struct Arc
+{
+	public List<Vector3> vertices;
+	public RaycastHit2D raycastHit;
+	public int arcVertices;
+}
