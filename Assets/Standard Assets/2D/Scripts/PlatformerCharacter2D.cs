@@ -121,6 +121,10 @@ namespace UnityStandardAssets._2D
 				{
 					m_Anim.SetBool("Wall", true);
 				}
+				else if (contactPoints[0].normal.y < 0)
+				{
+					m_Anim.SetBool("Ceiling", true);
+				}
 
 				if (hasBallControl)
 				{
@@ -176,6 +180,7 @@ namespace UnityStandardAssets._2D
 				m_JumpCooldown = 0.5f;
 				m_Anim.SetBool("Ground", false);
 				m_Anim.SetBool("Wall", false);
+				m_Anim.SetBool("Ceiling", false);
 				audioSource.PlayOneShot(Resources.Load<AudioClip>("Sound/Jump"));
 				m_Rigidbody2D.velocity = (jumpDirection * m_JumpForce);
 
