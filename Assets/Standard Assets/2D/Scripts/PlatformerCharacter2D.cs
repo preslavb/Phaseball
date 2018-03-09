@@ -37,8 +37,9 @@ namespace UnityStandardAssets._2D
 		private Transform m_CeilingCheck;   // A position marking where to check for ceilings
 		const float k_CeilingRadius = .01f; // Radius of the overlap circle to determine if the player can stand up
 		private Animator m_Anim;            // Reference to the player's animator component.
+		private AudioSource audioSource;
 		private Rigidbody2D m_Rigidbody2D;
-		private bool m_FacingRight = true;  // For determining which way the player is currently facing.
+		public bool m_FacingRight = true;  // For determining which way the player is currently facing.
 
 		public bool hasBallControl = false;
 		public float defaultGravity = 10;
@@ -54,6 +55,7 @@ namespace UnityStandardAssets._2D
 			
 			m_Anim = GetComponent<Animator>();
 			m_Rigidbody2D = GetComponent<Rigidbody2D>();
+			audioSource = GetComponent<AudioSource>();
 
 			timeManager = GameObject.Find("Main Camera").GetComponent<TimeManager>();
 		}
@@ -150,7 +152,7 @@ namespace UnityStandardAssets._2D
 
 				m_BallCooldown = timeManager.slowFactor/10;
 
-				Destroy(other.gameObject.transform.parent.gameObject);
+				other.gameObject.transform.parent.GetComponent<BallScript>().Destroy();
 			}
 		}
 
@@ -165,7 +167,13 @@ namespace UnityStandardAssets._2D
 				jumped = true;
 				m_JumpCooldown = 0.5f;
 				m_Anim.SetBool("Ground", false);
+				audioSource.PlayOneShot(Resources.Load<AudioClip>("Sound/Jump"));
 				m_Rigidbody2D.velocity = (jumpDirection * m_JumpForce);
+
+				if ((jumpDirection.x > 0 && !m_FacingRight) || (jumpDirection.x < 0 && m_FacingRight))
+				{
+					Flip();
+				}
 
 				m_FallCooldown = 0;
 				m_Rigidbody2D.gravityScale = defaultGravity;
@@ -180,6 +188,12 @@ namespace UnityStandardAssets._2D
 
 				slowTime = false;
 
+				audioSource.PlayOneShot(Resources.Load<AudioClip>("Sound/Shoot"));
+
+				if ((jumpDirection.x > 0 && !m_FacingRight) || (jumpDirection.x < 0 && m_FacingRight))
+				{
+					Flip();
+				}
 
 				GameObject ballInstance = Instantiate(m_BallPrefab);
 
@@ -198,10 +212,7 @@ namespace UnityStandardAssets._2D
 			// Switch the way the player is labelled as facing.
 			m_FacingRight = !m_FacingRight;
 
-			// Multiply the player's x local scale by -1.
-			Vector3 theScale = transform.localScale;
-			theScale.x *= -1;
-			transform.localScale = theScale;
+			gameObject.GetComponent<SpriteRenderer>().flipX = !gameObject.GetComponent<SpriteRenderer>().flipX;
 		}
 
 		private void DrawParabola(Vector2 jumpDirection, int complexityPerSecond, float numberOfSeconds = 3)

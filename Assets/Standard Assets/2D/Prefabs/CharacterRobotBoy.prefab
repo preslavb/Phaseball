@@ -31,6 +31,7 @@ GameObject:
   - component: {fileID: 11400000}
   - component: {fileID: 6100000}
   - component: {fileID: 114088485471334088}
+  - component: {fileID: 82032091670415634}
   m_Layer: 8
   m_Name: CharacterRobotBoy
   m_TagString: Player
@@ -214,6 +215,7 @@ MonoBehaviour:
   m_FallCooldown: 2
   m_BallPrefab: {fileID: 1529153454364506, guid: 79b616798b394e8439ba1310555b97d1,
     type: 2}
+  m_FacingRight: 1
   hasBallControl: 0
   defaultGravity: 5
   slowTime: 0
@@ -358,6 +360,86 @@ Transform:
   m_Father: {fileID: 400002}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &82032091670415634
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100002}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!114 &114088485471334088
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -389,7 +471,7 @@ MonoBehaviour:
     m_Bits: 4294967039
   velocity: 15
   angle: 45
-  resolution: 20
+  resolution: 60
 --- !u!120 &120989304320750754
 LineRenderer:
   m_ObjectHideFlags: 1
@@ -440,8 +522,8 @@ LineRenderer:
         outSlope: 0
         tangentMode: 0
       - serializedVersion: 2
-        time: 0.49716187
-        value: 0.11711693
+        time: 0.49432373
+        value: 0.2792797
         inSlope: 0
         outSlope: 0
         tangentMode: 0
