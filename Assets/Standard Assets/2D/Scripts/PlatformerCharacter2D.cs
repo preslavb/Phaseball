@@ -19,6 +19,8 @@ namespace UnityStandardAssets._2D
 
 		public TimeManager timeManager;
 
+
+
 		[SerializeField] private float m_MaxSpeed = 10f;                    // The fastest the player can travel in the x axis.
 		[SerializeField] public float m_JumpForce = 400f;                  // Amount of force added when the player jumps.
 		[SerializeField] public float m_BallForce = 10f;
@@ -87,6 +89,9 @@ namespace UnityStandardAssets._2D
 				}
 			}
 			*/
+
+
+
 
 			if (m_JumpCooldown > 0)
 			{
