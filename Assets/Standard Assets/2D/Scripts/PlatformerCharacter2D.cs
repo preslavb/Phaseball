@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public static class BallManager
 {
@@ -44,6 +45,9 @@ namespace UnityStandardAssets._2D
 		public bool hasBallControl = false;
 		public float defaultGravity = 10;
 		public bool slowTime = false; // used to keep track if time is slow or not.
+
+		public Team teamBelongingTo;
+		private Vector2 startPosition;
 		
 		private void Awake()
 		{
@@ -56,6 +60,7 @@ namespace UnityStandardAssets._2D
 			m_Anim = GetComponent<Animator>();
 			m_Rigidbody2D = GetComponent<Rigidbody2D>();
 			audioSource = GetComponent<AudioSource>();
+			startPosition = transform.position;
 
 			timeManager = GameObject.Find("Main Camera").GetComponent<TimeManager>();
 		}
@@ -257,6 +262,12 @@ namespace UnityStandardAssets._2D
 		private void DrawThrowLine(Vector2 jumpDirection)
 		{
 			Debug.DrawLine((Vector2)gameObject.transform.position, (Vector2)gameObject.transform.position + jumpDirection * 100);
+		}
+
+		public void ResetPosition()
+		{
+			transform.position = startPosition;
+			m_Rigidbody2D.velocity = Vector2.zero;
 		}
 	}
 }
