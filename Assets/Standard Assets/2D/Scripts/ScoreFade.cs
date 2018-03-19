@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class ScoreFade : MonoBehaviour 
 {
 	public CanvasGroup uiScore;
+	public float lerpTime = 0.1f;
 
 	// Use this for initialization
 	void Start ()
@@ -25,7 +26,7 @@ public class ScoreFade : MonoBehaviour
 			StartCoroutine (Fade (uiScore, uiScore.alpha, 0));
 		}
 	}
-	IEnumerator Fade(CanvasGroup cg, float start, float end, float lerpTime = 0.5f)
+	IEnumerator Fade(CanvasGroup cg, float start, float end)
 	{
 		float timeStarted = Time.time;
 		float timeSinceStart = Time.time - timeStarted;
