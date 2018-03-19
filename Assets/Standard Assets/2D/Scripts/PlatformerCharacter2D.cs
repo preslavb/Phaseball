@@ -48,7 +48,8 @@ namespace UnityStandardAssets._2D
 
 		public Team teamBelongingTo;
 		private Vector2 startPosition;
-		
+		private bool bumped;
+
 		private void Awake()
 		{
 			// Setting up references.
@@ -104,9 +105,26 @@ namespace UnityStandardAssets._2D
 		}
 
 		private void FixedUpdate()
-		{ 
-
+		{
+			m_Anim.SetBool("Ball", hasBallControl);
 			m_Anim.SetBool("Ground", m_Grounded);
+		}
+
+		private void OnCollisionExit2D(Collision2D collision)
+		{
+			if (collision.gameObject.layer == 9)
+			{
+				m_Rigidbody2D.gravityScale = defaultGravity;
+				m_Grounded = false;
+			}
+		}
+
+		private void OnCollisionStay2D(Collision2D collision)
+		{
+			if (collision.gameObject.layer == 9)
+			{
+				m_Grounded = true;
+			}
 		}
 
 		private void OnCollisionEnter2D(Collision2D collision)
@@ -139,14 +157,31 @@ namespace UnityStandardAssets._2D
 				}
 			}
 
-			else
+			else if (collision.gameObject.name.Contains("Player") && !bumped)
 			{
-				m_Rigidbody2D.velocity = new Vector2(-m_Rigidbody2D.velocity.x, m_Rigidbody2D.velocity.y);
-				collision.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(
-					-collision.gameObject.GetComponent<Rigidbody2D>().velocity.x,
-					collision.gameObject.GetComponent<Rigidbody2D>().velocity.y);
+				m_Rigidbody2D.velocity = -m_Rigidbody2D.velocity;
 				m_Rigidbody2D.gravityScale = defaultGravity;
+
+				collision.gameObject.GetComponent<PlatformerCharacter2D>().m_Rigidbody2D.velocity = -m_Rigidbody2D.velocity;
+				collision.gameObject.GetComponent<PlatformerCharacter2D>().m_Rigidbody2D.gravityScale = defaultGravity;
+
+				collision.gameObject.GetComponent<PlatformerCharacter2D>().bumped = true;
+				bumped = true;
+
+				if (collision.gameObject.GetComponent<PlatformerCharacter2D>().hasBallControl)
+				{
+					this.hasBallControl = true;
+					collision.gameObject.GetComponent<PlatformerCharacter2D>().hasBallControl = false;
+				}
+
+				m_Grounded = false;
+				collision.gameObject.GetComponent<PlatformerCharacter2D>().m_Grounded = false;
 			}
+		}
+
+		private void LateUpdate()
+		{
+			bumped = false;
 		}
 
 		private void OnTriggerEnter2D(Collider2D other)
@@ -159,8 +194,6 @@ namespace UnityStandardAssets._2D
 
 				if (this.jumped == true)
 				{
-					//print ("Player " + this.playerNumber.ToString() + " is not on the ground");
-					//print ("Slow time colision with ball Player with ball: " + this.playerNumber.ToString ());
 					timeManager.SlowDownTime();
 					slowTime = true;
 				}
@@ -189,7 +222,7 @@ namespace UnityStandardAssets._2D
 				audioSource.PlayOneShot(Resources.Load<AudioClip>("Sound/Jump"));
 				m_Rigidbody2D.velocity = (jumpDirection * m_JumpForce);
 
-				if ((jumpDirection.x > 0 && !m_FacingRight) || (jumpDirection.x < 0 && m_FacingRight))
+				if (((jumpDirection.x > 0 && !m_FacingRight) || (jumpDirection.x < 0 && m_FacingRight)) && !m_Anim.GetBool("Wall"))
 				{
 					Flip();
 				}
@@ -209,7 +242,7 @@ namespace UnityStandardAssets._2D
 
 				audioSource.PlayOneShot(Resources.Load<AudioClip>("Sound/Shoot"));
 
-				if ((jumpDirection.x > 0 && !m_FacingRight) || (jumpDirection.x < 0 && m_FacingRight))
+				if (((jumpDirection.x > 0 && !m_FacingRight) || (jumpDirection.x < 0 && m_FacingRight)) && !m_Anim.GetBool("Wall"))
 				{
 					Flip();
 				}
@@ -268,6 +301,9 @@ namespace UnityStandardAssets._2D
 		{
 			transform.position = startPosition;
 			m_Rigidbody2D.velocity = Vector2.zero;
+			m_Anim.SetBool("Wall", false);
+			m_Anim.SetBool("Ceiling", false);
+			m_Anim.SetBool("Ground", false);
 		}
 	}
 }
