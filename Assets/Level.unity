@@ -1379,6 +1379,12 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0eb16b4b3e362ef4f97494dd0e686c46, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &371353134 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 11400000, guid: 87a2357765801c34292d6718d8b4d770,
+    type: 2}
+  m_PrefabInternal: {fileID: 667351390}
+  m_Script: {fileID: 11500000, guid: c3d7b34a3bb2d4e4b926e7e729d3d410, type: 3}
 --- !u!1 &375819151
 GameObject:
   m_ObjectHideFlags: 0
@@ -4798,7 +4804,7 @@ GameObject:
   - component: {fileID: 1799742674}
   - component: {fileID: 1799742673}
   m_Layer: 0
-  m_Name: Gamemanage
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4815,7 +4821,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f6ff324cdd784641b8402278eadb1bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerController: {fileID: 0}
+  playerController: {fileID: 371353134}
   pauseMenu: {fileID: 1311244514}
   optionsMenu: {fileID: 10482417}
 --- !u!4 &1799742674
