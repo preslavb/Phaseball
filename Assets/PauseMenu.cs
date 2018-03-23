@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets._2D;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour {
 	public Platformer2DUserControl playerController; 
@@ -71,6 +72,6 @@ public class PauseMenu : MonoBehaviour {
 
 	public void Quit()
 	{
-		Application.Quit ();
+		SceneManager.LoadScene (0);
 	}
 }
