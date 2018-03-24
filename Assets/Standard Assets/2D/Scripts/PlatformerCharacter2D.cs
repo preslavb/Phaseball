@@ -22,6 +22,7 @@ namespace UnityStandardAssets._2D
 		bool canBoost = false;
 
 		public TimeManager timeManager;
+		public BoostRespawn boostRespawn;
 
 		[SerializeField] private float m_MaxSpeed = 10f;                    // The fastest the player can travel in the x axis.
 		[SerializeField] public float m_JumpForce = 400f;                  // Amount of force added when the player jumps.
@@ -68,6 +69,7 @@ namespace UnityStandardAssets._2D
 			startPosition = transform.position;
 
 			timeManager = GameObject.Find("Main Camera").GetComponent<TimeManager>();
+			boostRespawn = GameObject.Find("BoostSpawner").GetComponent<BoostRespawn>();
 		}
 
 		private void Update()
@@ -209,12 +211,12 @@ namespace UnityStandardAssets._2D
 		void powerUp()
 		{
 			currentBoost++;
+			boostRespawn.resetTimer();
 
-			print("Power Up: Boost");
-			print ("Player " + playerNumber.ToString());
-			print ("Current Boost " +currentBoost.ToString());
+			//print("Power Up: Boost");
+			//print ("Player " + playerNumber.ToString());
+			//print ("Current Boost " +currentBoost.ToString());
 
-		//	canPickUp = true;
 		}
 
 		public void Move(Vector2 jumpDirection, bool jump)
