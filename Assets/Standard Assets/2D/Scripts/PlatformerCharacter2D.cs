@@ -13,11 +13,16 @@ namespace UnityStandardAssets._2D
 	public class PlatformerCharacter2D : MonoBehaviour
 	{
 		public int playerNumber = 1;
+		public int maxBoost = 2;
+		public int currentBoost = 0;
 		int playerWithBall;
 
 		bool jumped;
+		bool canPickUp = true;
+		bool canBoost = false;
 
 		public TimeManager timeManager;
+		public BoostRespawn boostRespawn;
 
 		[SerializeField] private float m_MaxSpeed = 10f;                    // The fastest the player can travel in the x axis.
 		[SerializeField] public float m_JumpForce = 400f;                  // Amount of force added when the player jumps.
@@ -64,30 +69,17 @@ namespace UnityStandardAssets._2D
 			startPosition = transform.position;
 
 			timeManager = GameObject.Find("Main Camera").GetComponent<TimeManager>();
+			boostRespawn = GameObject.Find("BoostSpawner").GetComponent<BoostRespawn>();
 		}
 
 		private void Update()
 		{
-			/*
-			if(this.jumped == true)
+			canPickUp = true;
+
+			if (jumped) 
 			{
-				print ("Player "  + this.playerNumber.ToString() + " is no longer on the ground");
+				canBoost = true;
 			}
-			//Test: Toggle timescale
-			if(Input.GetButtonDown("Fire1"))
-			{
-				if (!slowTime) 
-				{
-					slowTime = true;
-					timeManager.SlowDownTime();
-				} 
-				else 
-				{
-					slowTime = false;
-					timeManager.NormalTime ();
-				}
-			}
-			*/
 
 			if (m_JumpCooldown > 0)
 			{
@@ -137,6 +129,8 @@ namespace UnityStandardAssets._2D
 				m_Rigidbody2D.gravityScale = 0;
 				m_FallCooldown = 2;
 
+				canBoost = false;
+
 				ContactPoint2D[] contactPoints = new ContactPoint2D[1];
 				collision.GetContacts(contactPoints);
 
@@ -177,6 +171,7 @@ namespace UnityStandardAssets._2D
 				m_Grounded = false;
 				collision.gameObject.GetComponent<PlatformerCharacter2D>().m_Grounded = false;
 			}
+
 		}
 
 		private void LateUpdate()
@@ -204,6 +199,24 @@ namespace UnityStandardAssets._2D
 
 				other.gameObject.transform.parent.GetComponent<BallScript>().Destroy();
 			}
+				
+			if(other.gameObject.tag == "PickUp" && currentBoost < maxBoost && canPickUp)
+			{
+				canPickUp = false;
+				powerUp ();
+				DestroyObject (other.gameObject);
+			}
+		}
+
+		void powerUp()
+		{
+			currentBoost++;
+			boostRespawn.resetTimer();
+
+			//print("Power Up: Boost");
+			//print ("Player " + playerNumber.ToString());
+			//print ("Current Boost " +currentBoost.ToString());
+
 		}
 
 		public void Move(Vector2 jumpDirection, bool jump)
@@ -229,8 +242,8 @@ namespace UnityStandardAssets._2D
 
 				m_FallCooldown = 0;
 				m_Rigidbody2D.gravityScale = defaultGravity;
-			}
 
+			}
 			else if (hasBallControl && jump && m_BallCooldown <= 0)
 			{
 
@@ -256,6 +269,31 @@ namespace UnityStandardAssets._2D
 				m_BallCooldown = 0.05f;
 				m_JumpCooldown = 0.5f;
 			}
+
+			// In theory boost in air
+			if (!m_Grounded && jump && !m_Anim.GetBool("Ground") && currentBoost > 0 &&  currentBoost  <= maxBoost && !hasBallControl && canBoost)
+			{ 
+				//need bool to tell jump and boost appart
+				currentBoost--;
+				// Add a vertical force to the player.
+				m_Grounded = false;
+				//jumped = true;
+				m_JumpCooldown = 0.5f;
+				m_Anim.SetBool("Ground", false);
+				m_Anim.SetBool("Wall", false);
+				m_Anim.SetBool("Ceiling", false);
+				audioSource.PlayOneShot(Resources.Load<AudioClip>("Sound/Jump"));
+				m_Rigidbody2D.velocity = (jumpDirection * m_JumpForce);
+
+				if (((jumpDirection.x > 0 && !m_FacingRight) || (jumpDirection.x < 0 && m_FacingRight)) && !m_Anim.GetBool("Wall"))
+				{
+					Flip();
+				}
+
+				m_FallCooldown = 0;
+				m_Rigidbody2D.gravityScale = defaultGravity;
+			}
+
 		}
 
 
