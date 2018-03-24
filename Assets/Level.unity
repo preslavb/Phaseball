@@ -6550,7 +6550,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5fd416b94f90cc4b8dcc040872d41e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resolutionDropdown: {fileID: 0}
+  resolutionDropdown: {fileID: 198675807}
 --- !u!1 &1808070197
 GameObject:
   m_ObjectHideFlags: 0
