@@ -37,38 +37,9 @@ public class PauseMenu : MonoBehaviour {
 		}
 	}
 
-	public void Options(bool Selected)
-	{
-		if (Selected) 
-		{
-			optionsMenu.gameObject.SetActive (true);
-			pauseMenu.gameObject.SetActive(false);
 
-		}
-		if (!Selected) 
-		{
-			optionsMenu.gameObject.SetActive (false);
-			pauseMenu.gameObject.SetActive (true);
 
-		}
-	}
 
-	public void Back(bool Clicked)
-	{
-		if (Clicked)
-		{
-			optionsMenu.gameObject.SetActive (false);
-			pauseMenu.gameObject.SetActive(true);
-
-		}
-
-		if (!Clicked) 
-		{
-			optionsMenu.gameObject.SetActive (true);
-			pauseMenu.gameObject.SetActive(false);
-
-		}
-	}
 
 	public void Quit()
 	{
