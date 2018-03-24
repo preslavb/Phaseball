@@ -58,7 +58,6 @@
      <Compile Include="Assets\Standard Assets\2D\Scripts\GoalScript.cs" />
      <Compile Include="Assets\Standard Assets\2D\Scripts\Platformer2DUserControl.cs" />
      <Compile Include="Assets\Standard Assets\2D\Scripts\PlatformerCharacter2D.cs" />
-     <Compile Include="Assets\Standard Assets\2D\Scripts\PowerUp.cs" />
      <Compile Include="Assets\Standard Assets\2D\Scripts\Restarter.cs" />
      <Compile Include="Assets\Standard Assets\2D\Scripts\ScoreFade.cs" />
      <Compile Include="Assets\Standard Assets\2D\Scripts\TimeManager.cs" />

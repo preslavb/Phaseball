@@ -13,12 +13,13 @@ namespace UnityStandardAssets._2D
 	public class PlatformerCharacter2D : MonoBehaviour
 	{
 		public int playerNumber = 1;
-		int playerWithBall;
 		public int maxBoost = 2;
 		public int currentBoost = 0;
+		int playerWithBall;
 
 		bool jumped;
 		bool canPickUp = true;
+		bool canBoost = false;
 
 		public TimeManager timeManager;
 
@@ -71,26 +72,12 @@ namespace UnityStandardAssets._2D
 
 		private void Update()
 		{
-			/*
-			if(this.jumped == true)
+			canPickUp = true;
+
+			if (jumped) 
 			{
-				print ("Player "  + this.playerNumber.ToString() + " is no longer on the ground");
+				canBoost = true;
 			}
-			//Test: Toggle timescale
-			if(Input.GetButtonDown("Fire1"))
-			{
-				if (!slowTime) 
-				{
-					slowTime = true;
-					timeManager.SlowDownTime();
-				} 
-				else 
-				{
-					slowTime = false;
-					timeManager.NormalTime ();
-				}
-			}
-			*/
 
 			if (m_JumpCooldown > 0)
 			{
@@ -139,6 +126,8 @@ namespace UnityStandardAssets._2D
 				jumped = false;
 				m_Rigidbody2D.gravityScale = 0;
 				m_FallCooldown = 2;
+
+				canBoost = false;
 
 				ContactPoint2D[] contactPoints = new ContactPoint2D[1];
 				collision.GetContacts(contactPoints);
@@ -225,7 +214,7 @@ namespace UnityStandardAssets._2D
 			print ("Player " + playerNumber.ToString());
 			print ("Current Boost " +currentBoost.ToString());
 
-			canPickUp = true;
+		//	canPickUp = true;
 		}
 
 		public void Move(Vector2 jumpDirection, bool jump)
@@ -251,8 +240,8 @@ namespace UnityStandardAssets._2D
 
 				m_FallCooldown = 0;
 				m_Rigidbody2D.gravityScale = defaultGravity;
-			}
 
+			}
 			else if (hasBallControl && jump && m_BallCooldown <= 0)
 			{
 
@@ -278,6 +267,31 @@ namespace UnityStandardAssets._2D
 				m_BallCooldown = 0.05f;
 				m_JumpCooldown = 0.5f;
 			}
+
+			// In theory boost in air
+			if (!m_Grounded && jump && !m_Anim.GetBool("Ground") && currentBoost > 0 &&  currentBoost  <= maxBoost && !hasBallControl && canBoost)
+			{ 
+				//need bool to tell jump and boost appart
+				currentBoost--;
+				// Add a vertical force to the player.
+				m_Grounded = false;
+				//jumped = true;
+				m_JumpCooldown = 0.5f;
+				m_Anim.SetBool("Ground", false);
+				m_Anim.SetBool("Wall", false);
+				m_Anim.SetBool("Ceiling", false);
+				audioSource.PlayOneShot(Resources.Load<AudioClip>("Sound/Jump"));
+				m_Rigidbody2D.velocity = (jumpDirection * m_JumpForce);
+
+				if (((jumpDirection.x > 0 && !m_FacingRight) || (jumpDirection.x < 0 && m_FacingRight)) && !m_Anim.GetBool("Wall"))
+				{
+					Flip();
+				}
+
+				m_FallCooldown = 0;
+				m_Rigidbody2D.gravityScale = defaultGravity;
+			}
+
 		}
 
 
