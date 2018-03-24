@@ -40,20 +40,27 @@ public class GoalScript : MonoBehaviour {
 	{
 		if (collision.gameObject.tag == "Ball")
 		{
-			Goals++;
-			GetComponent<AudioSource>().PlayOneShot(Resources.Load<AudioClip>("Sound/Score"));
-
-			foreach (PlatformerCharacter2D character in playerScripts)
-			{
-				character.ResetPosition();
-			}
-
-			TimerScript.MatchStarted = false;
-
-			collision.gameObject.transform.parent.GetComponent<BallScript>().Destroy();
-			GameObject newBall = Instantiate(ballPrefab);
-			newBall.transform.position = new Vector2(-0.2f, -0.3f);
-			newBall.name = "Ball";
+			StartCoroutine(GoalCoroutine(collision));
 		}
+	}
+
+	private IEnumerator GoalCoroutine(Collider2D collision)
+	{
+		Goals++;
+		GetComponent<AudioSource>().PlayOneShot(Resources.Load<AudioClip>("Sound/Score"));
+		collision.gameObject.transform.parent.GetComponent<BallScript>().Destroy();
+
+		yield return new WaitForSeconds(1.5f);
+
+		foreach (PlatformerCharacter2D character in playerScripts)
+		{
+			character.ResetPosition();
+		}
+
+		TimerScript.MatchStarted = false;
+
+		GameObject newBall = Instantiate(ballPrefab);
+		newBall.transform.position = new Vector2(-0.2f, -0.3f);
+		newBall.name = "Ball";
 	}
 }
