@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 
 using UnityEngine.EventSystems;
+using UnityStandardAssets._2D;
 
 public class TimerScript : MonoBehaviour
 { 
@@ -16,7 +17,32 @@ public class TimerScript : MonoBehaviour
     public Text timerDisplay;
 
 	public GameObject reset;
-	public Button resetButton; 
+	public Button resetButton;
+	public Text startMatchText;
+
+	public static TimerScript Instance;
+
+	private static bool matchStarted;
+	public static bool MatchStarted
+	{
+		get
+		{
+			return matchStarted;
+		}
+
+		set
+		{
+			matchStarted = value;
+			if (!matchStarted)
+				Instance.ResetCountdown();
+			Platformer2DUserControl.controllable = value;
+		}
+	}
+
+	private void Awake()
+	{
+		Instance = this;
+	}
 
 	// Initialization of the timer 
 	void Start ()
@@ -28,6 +54,9 @@ public class TimerScript : MonoBehaviour
 		seconds = (timer % 60).ToString("00");
 
 		timerDisplay.text = minutes +" : "+ seconds;
+		MatchStarted = false;
+
+		StartCoroutine(StartMatchCoroutine());
 
 		reset.SetActive (false);
 	}
@@ -35,33 +64,58 @@ public class TimerScript : MonoBehaviour
 	// Each frame the delta time is subtracted from the timer and when it is less than or equal to 0 the EndMenu scene is loaded
 	void Update ()
     {
-
-
-        timer -= Time.deltaTime;
-		minutes = (timer / 60).ToString("00");
-		seconds = (timer % 60).ToString("00");
-
-		if (timer <= 0) 
+		if (MatchStarted)
 		{
-			timer = 0;
-			timerDisplay.text = "Match Over";
+			timer -= Time.deltaTime;
+			minutes = (timer / 60).ToString("00");
+			seconds = (timer % 60).ToString("00");
 
-			reset.SetActive(true);
-			resetButton.Select();
-			resetButton.OnSelect (null);
-			//EventSystem.current.SetSelectedGameObject(reset);
-			Time.timeScale = 0;
+			if (timer <= 0)
+			{
+				timer = 0;
+				timerDisplay.text = "Match Over";
+
+				reset.SetActive(true);
+				resetButton.Select();
+				resetButton.OnSelect(null);
+				//EventSystem.current.SetSelectedGameObject(reset);
+				Time.timeScale = 0;
 
 
-		} 
-		else 
-		{
-			timerDisplay.text = minutes +" : "+ seconds;
-		} 
+			}
+			else
+			{
+				timerDisplay.text = minutes + " : " + seconds;
+			}
+		}
     }
 
 	public void ResetGame()
 	{
 		Application.LoadLevel(Application.loadedLevel);
+	}
+
+	public void ResetCountdown()
+	{
+		StartCoroutine(StartMatchCoroutine());
+	}
+
+	private IEnumerator StartMatchCoroutine()
+	{
+		byte matchCountdown = 3;
+		startMatchText.gameObject.SetActive(true);
+
+		AudioClip countdownTick = Resources.Load<AudioClip>("Sound/CountdownTick");
+
+		while (matchCountdown > 0)
+		{
+			startMatchText.text = matchCountdown.ToString();
+			GetComponent<AudioSource>().PlayOneShot(countdownTick);
+			yield return new WaitForSeconds(1);
+			matchCountdown--;
+		}
+
+		startMatchText.gameObject.SetActive(false);
+		MatchStarted = true;
 	}
 }

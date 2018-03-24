@@ -16,9 +16,9 @@ public class PauseMenu : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetButtonDown("Joystick Button 7"))
-			{
+		{
 			PauseGame ();
-			}
+		}
 	}
 	public void PauseGame()
 	{
@@ -27,12 +27,14 @@ public class PauseMenu : MonoBehaviour {
 			pauseMenu.gameObject.SetActive(true);
 			optionsMenu.gameObject.SetActive (false);
 			Time.timeScale = 0;
+			Platformer2DUserControl.controllable = false;
 		}
 		else 
 		{
 			pauseMenu.gameObject.SetActive(false);
 			optionsMenu.gameObject.SetActive (false);
 			Time.timeScale = 1;
+			Platformer2DUserControl.controllable = true;
 		}
 	}
 

@@ -48,6 +48,8 @@ public class GoalScript : MonoBehaviour {
 				character.ResetPosition();
 			}
 
+			TimerScript.MatchStarted = false;
+
 			collision.gameObject.transform.parent.GetComponent<BallScript>().Destroy();
 			GameObject newBall = Instantiate(ballPrefab);
 			newBall.transform.position = new Vector2(-0.2f, -0.3f);
