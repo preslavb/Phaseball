@@ -14,8 +14,11 @@ namespace UnityStandardAssets._2D
 	{
 		public int playerNumber = 1;
 		int playerWithBall;
+		public int maxBoost = 2;
+		public int currentBoost = 0;
 
 		bool jumped;
+		bool canPickUp = true;
 
 		public TimeManager timeManager;
 
@@ -177,6 +180,7 @@ namespace UnityStandardAssets._2D
 				m_Grounded = false;
 				collision.gameObject.GetComponent<PlatformerCharacter2D>().m_Grounded = false;
 			}
+
 		}
 
 		private void LateUpdate()
@@ -204,6 +208,24 @@ namespace UnityStandardAssets._2D
 
 				other.gameObject.transform.parent.GetComponent<BallScript>().Destroy();
 			}
+				
+			if(other.gameObject.tag == "PickUp" && currentBoost < maxBoost && canPickUp)
+			{
+				canPickUp = false;
+				powerUp ();
+				DestroyObject (other.gameObject);
+			}
+		}
+
+		void powerUp()
+		{
+			currentBoost++;
+
+			print("Power Up: Boost");
+			print ("Player " + playerNumber.ToString());
+			print ("Current Boost " +currentBoost.ToString());
+
+			canPickUp = true;
 		}
 
 		public void Move(Vector2 jumpDirection, bool jump)
