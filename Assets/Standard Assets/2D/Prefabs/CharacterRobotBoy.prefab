@@ -74,7 +74,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.586, y: -3, z: 0}
+  m_LocalPosition: {x: 4.21, y: -3.76, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4857831151052012}
@@ -149,7 +149,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.82, y: 1.02}
+    oldSize: {x: 0.82, y: 1.01}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -167,7 +167,7 @@ Animator:
   m_GameObject: {fileID: 100002}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: 82ae4d42a74da7a408f19b403e404f7b, type: 2}
+  m_Controller: {fileID: 22100000, guid: 7c8082e94cf0a9c4b973c5671b43791d, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 1
   m_ApplyRootMotion: 0
@@ -186,7 +186,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3d7b34a3bb2d4e4b926e7e729d3d410, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Jump: 0
   h: 0
   v: 0
 --- !u!114 &11400002
@@ -200,8 +199,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d08f91df3bd212f429df17f53ce2f364, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerNumber: 1
+  playerNumber: 2
+  maxBoost: 2
+  currentBoost: 0
   timeManager: {fileID: 0}
+  boostRespawn: {fileID: 0}
+  boostSprite: {fileID: 0}
+  boostAvailable: {fileID: 21300000, guid: 2f32fb36819352547bd5bd8448021cd1, type: 3}
+  boostEmpty: {fileID: 21300000, guid: 466c99bdec5d66a4c8f7f39c180141c6, type: 3}
   m_MaxSpeed: 10
   m_JumpForce: 20
   m_BallForce: 7
@@ -215,10 +220,11 @@ MonoBehaviour:
   m_FallCooldown: 2
   m_BallPrefab: {fileID: 1529153454364506, guid: 79b616798b394e8439ba1310555b97d1,
     type: 2}
-  m_FacingRight: 1
+  m_FacingRight: 0
   hasBallControl: 0
   defaultGravity: 5
   slowTime: 0
+  teamBelongingTo: 1
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -253,9 +259,9 @@ SpriteRenderer:
   m_SortingLayerID: -1783731295
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: acd74e4c62286454185e6c6058703859, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1482fda9361df284f88092756366b7f2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1, y: 1}
@@ -486,7 +492,7 @@ LineRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 2100000, guid: fc990acaacd7c99499a124096fe0d169, type: 2}
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -538,8 +544,8 @@ LineRenderer:
       m_RotationOrder: 0
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.96470594, g: 0.36862746, b: 0.8745099, a: 0.5803922}
-      key1: {r: 0.96470594, g: 0.37254903, b: 0.8745099, a: 0.69411767}
+      key0: {r: 0.9490197, g: 0.12941177, b: 0.023529414, a: 0.5803922}
+      key1: {r: 0.9490197, g: 0.12941177, b: 0.023529414, a: 0.69411767}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}

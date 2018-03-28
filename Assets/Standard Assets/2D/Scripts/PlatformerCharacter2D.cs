@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.UI;
 
 public static class BallManager
 {
@@ -23,6 +23,9 @@ namespace UnityStandardAssets._2D
 
 		public TimeManager timeManager;
 		public BoostRespawn boostRespawn;
+		public Image boostSprite;
+		public Sprite boostAvailable;
+		public Sprite boostEmpty;
 
 		[SerializeField] private float m_MaxSpeed = 10f;                    // The fastest the player can travel in the x axis.
 		[SerializeField] public float m_JumpForce = 400f;                  // Amount of force added when the player jumps.
@@ -211,6 +214,7 @@ namespace UnityStandardAssets._2D
 		void powerUp()
 		{
 			currentBoost++;
+			boostSprite.sprite = boostAvailable;
 			boostRespawn.resetTimer();
 
 			//print("Power Up: Boost");
@@ -275,6 +279,7 @@ namespace UnityStandardAssets._2D
 			{ 
 				//need bool to tell jump and boost appart
 				currentBoost--;
+				boostSprite.sprite = boostEmpty;
 				// Add a vertical force to the player.
 				m_Grounded = false;
 				//jumped = true;
