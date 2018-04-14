@@ -10,9 +10,14 @@ public class MainMenu : MonoBehaviour {
 	// Use this for initialization
 
 
-	public void PlayLevel()
+	public void PlayLevel1()
 	{
 		SceneManager.LoadScene (1);
+	}
+
+	public void PlayLevel2()
+	{
+		SceneManager.LoadScene (2);
 	}
 
 
