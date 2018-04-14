@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 6b63175dcca980b4f9b855bb977b4222
-timeCreated: 1521454536
+timeCreated: 1523218256
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -99,9 +99,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 392
-        width: 110
-        height: 120
+        y: 0
+        width: 95
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -112,10 +112,10 @@ TextureImporter:
       name: Player4WallLand_Ball_1
       rect:
         serializedVersion: 2
-        x: 110
-        y: 392
-        width: 110
-        height: 120
+        x: 95
+        y: 0
+        width: 95
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -126,10 +126,10 @@ TextureImporter:
       name: Player4WallLand_Ball_2
       rect:
         serializedVersion: 2
-        x: 0
-        y: 272
-        width: 110
-        height: 120
+        x: 190
+        y: 0
+        width: 95
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,10 +140,10 @@ TextureImporter:
       name: Player4WallLand_Ball_3
       rect:
         serializedVersion: 2
-        x: 110
-        y: 272
-        width: 110
-        height: 120
+        x: 285
+        y: 0
+        width: 95
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,10 +154,10 @@ TextureImporter:
       name: Player4WallLand_Ball_4
       rect:
         serializedVersion: 2
-        x: 0
-        y: 152
-        width: 110
-        height: 120
+        x: 380
+        y: 0
+        width: 95
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

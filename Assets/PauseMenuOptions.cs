@@ -9,6 +9,22 @@ public class PauseMenuOptions : MonoBehaviour {
 
 	Resolution[] resolutions;
 
+	static float currentVolume = 1;
+
+	public static float CurrentVolume
+	{
+		get
+		{
+			return currentVolume;
+		}
+
+		set
+		{
+			currentVolume = value;
+
+			AudioListener.volume = currentVolume;
+		}
+	}
 
 	void Start()
 	{
@@ -47,7 +63,7 @@ public class PauseMenuOptions : MonoBehaviour {
 
 	public void Volume (float volume)
 	{
-		Debug.Log ("volume");
+		CurrentVolume = volume;
 	}
 
 	public void SetFullscreen (bool isFullscreen)

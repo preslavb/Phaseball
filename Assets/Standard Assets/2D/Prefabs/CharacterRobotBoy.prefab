@@ -206,7 +206,7 @@ MonoBehaviour:
   boostRespawn: {fileID: 0}
   boostSprite: {fileID: 0}
   boostAvailable: {fileID: 21300000, guid: 2f32fb36819352547bd5bd8448021cd1, type: 3}
-  boostEmpty: {fileID: 21300000, guid: 466c99bdec5d66a4c8f7f39c180141c6, type: 3}
+  boostEmpty: {fileID: 21300000, guid: 2561e2c44ed7f61419bb8819db37c8dc, type: 3}
   m_MaxSpeed: 10
   m_JumpForce: 20
   m_BallForce: 7
@@ -218,7 +218,9 @@ MonoBehaviour:
   m_JumpCooldown: 0.5
   m_BallCooldown: 0.2
   m_FallCooldown: 2
-  m_BallPrefab: {fileID: 1529153454364506, guid: 79b616798b394e8439ba1310555b97d1,
+  m_BallPrefabBlueTeam: {fileID: 1264009297734672, guid: c19e6a73147059f44878d55b96d24ace,
+    type: 2}
+  m_BallPrefabRedTeam: {fileID: 1529153454364506, guid: 79b616798b394e8439ba1310555b97d1,
     type: 2}
   m_FacingRight: 0
   hasBallControl: 0

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: ba8932fef353c504fa0e3c97ced99b1f
-timeCreated: 1521409054
+timeCreated: 1523207760
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -98,9 +98,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 142
-        width: 105
-        height: 114
+        y: 2
+        width: 92
+        height: 98
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,10 +111,10 @@ TextureImporter:
       name: Player1Land_Ball_1
       rect:
         serializedVersion: 2
-        x: 105
-        y: 142
-        width: 105
-        height: 114
+        x: 92
+        y: 2
+        width: 92
+        height: 98
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -125,10 +125,10 @@ TextureImporter:
       name: Player1Land_Ball_2
       rect:
         serializedVersion: 2
-        x: 0
-        y: 28
-        width: 105
-        height: 114
+        x: 184
+        y: 2
+        width: 92
+        height: 98
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -139,10 +139,10 @@ TextureImporter:
       name: Player1Land_Ball_3
       rect:
         serializedVersion: 2
-        x: 105
-        y: 28
-        width: 105
-        height: 114
+        x: 276
+        y: 2
+        width: 92
+        height: 98
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

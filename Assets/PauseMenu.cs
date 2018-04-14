@@ -3,24 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets._2D;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class PauseMenu : MonoBehaviour {
 	public Platformer2DUserControl playerController; 
 	public Transform pauseMenu;
 	public Transform optionsMenu;
 
+	public static int PlayerPausedIndex = 1;
+	public static PauseMenu Instance;
+
 	// Use this for initialization
 	void Start () {
-		
+		Instance = this;
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		if (Input.GetButtonDown("Joystick Button 7"))
-		{
-			PauseGame ();
-		}
-	}
 	public void PauseGame()
 	{
 		if(pauseMenu.gameObject.activeInHierarchy == false)
@@ -38,10 +35,6 @@ public class PauseMenu : MonoBehaviour {
 			Platformer2DUserControl.controllable = true;
 		}
 	}
-
-
-
-
 
 	public void Quit()
 	{

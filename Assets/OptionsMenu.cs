@@ -45,9 +45,9 @@ public class OptionsMenu : MonoBehaviour {
 
 	}
 
-	public void Volume (float volume)
+	public void Volume(float volume)
 	{
-		Debug.Log ("volume");
+		AudioListener.volume = volume;
 	}
 
 	public void SetFullscreen (bool isFullscreen)
