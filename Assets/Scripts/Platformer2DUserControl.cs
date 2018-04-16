@@ -36,15 +36,15 @@ namespace UnityStandardAssets._2D
 				PauseMenu.Instance.PauseGame();
 			}
 
+			h = CrossPlatformInputManager.GetAxis("Horizontal" + m_Character.playerNumber);
+			v = CrossPlatformInputManager.GetAxis("Vertical" + m_Character.playerNumber);
+
+			jumpVector = new Vector2(h, v);
+
 			if (controllable)
 			{
 				// Read the jump input in Update so button presses aren't missed.
 				m_Jump = CrossPlatformInputManager.GetButtonDown("Jump" + m_Character.playerNumber);
-
-				h = CrossPlatformInputManager.GetAxis("Horizontal" + m_Character.playerNumber);
-				v = CrossPlatformInputManager.GetAxis("Vertical" + m_Character.playerNumber);
-
-				jumpVector = new Vector2(h, v);
 			}
 
 			else
