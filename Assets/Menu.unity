@@ -1961,11 +1961,6 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 1667418307}
   m_Script: {fileID: -113659843, guid: f70555f144d8491a825f0804e09c671c, type: 3}
---- !u!1 &1073966026 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1423187463242932, guid: 93df0702ff8b6074f8f202c1bfe5ed28,
-    type: 2}
-  m_PrefabInternal: {fileID: 1667418307}
 --- !u!1 &1392642426
 GameObject:
   m_ObjectHideFlags: 0
@@ -2515,7 +2510,7 @@ Prefab:
     - target: {fileID: 114193616326463544, guid: 93df0702ff8b6074f8f202c1bfe5ed28,
         type: 2}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224539794117746956, guid: 93df0702ff8b6074f8f202c1bfe5ed28,
         type: 2}
@@ -2611,11 +2606,11 @@ Prefab:
         type: 2}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1073966026}
+      objectReference: {fileID: 84898080}
     - target: {fileID: 114193616326463544, guid: 93df0702ff8b6074f8f202c1bfe5ed28,
         type: 2}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: 
+      value: SetResolution
       objectReference: {fileID: 0}
     - target: {fileID: 114193616326463544, guid: 93df0702ff8b6074f8f202c1bfe5ed28,
         type: 2}
@@ -2692,6 +2687,31 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 890673960}
+    - target: {fileID: 114375959080085756, guid: 93df0702ff8b6074f8f202c1bfe5ed28,
+        type: 2}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 84898080}
+    - target: {fileID: 114375959080085756, guid: 93df0702ff8b6074f8f202c1bfe5ed28,
+        type: 2}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetFullscreen
+      objectReference: {fileID: 0}
+    - target: {fileID: 114375959080085756, guid: 93df0702ff8b6074f8f202c1bfe5ed28,
+        type: 2}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114193616326463544, guid: 93df0702ff8b6074f8f202c1bfe5ed28,
+        type: 2}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114375959080085756, guid: 93df0702ff8b6074f8f202c1bfe5ed28,
+        type: 2}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 93df0702ff8b6074f8f202c1bfe5ed28, type: 2}
   m_IsPrefabParent: 0
