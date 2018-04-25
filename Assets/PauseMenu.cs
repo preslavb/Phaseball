@@ -18,7 +18,7 @@ public class PauseMenu : MonoBehaviour {
 		Instance = this;
 	}
 	
-	public void PauseGame()
+	public void PauseGame(Platformer2DUserControl characterPaused)
 	{
 		if(pauseMenu.gameObject.activeInHierarchy == false)
 		{
@@ -26,6 +26,8 @@ public class PauseMenu : MonoBehaviour {
 			optionsMenu.gameObject.SetActive (false);
 			Time.timeScale = 0;
 			Platformer2DUserControl.controllable = false;
+			characterPaused.thisPlayerPaused = true;
+			playerController = characterPaused;
 		}
 		else 
 		{
@@ -33,7 +35,17 @@ public class PauseMenu : MonoBehaviour {
 			optionsMenu.gameObject.SetActive (false);
 			Time.timeScale = 1;
 			Platformer2DUserControl.controllable = true;
+			characterPaused.thisPlayerPaused = false;
 		}
+	}
+
+	public void Unpause()
+	{
+		pauseMenu.gameObject.SetActive(false);
+		optionsMenu.gameObject.SetActive(false);
+		Time.timeScale = 1;
+		Platformer2DUserControl.controllable = true;
+		playerController.thisPlayerPaused = false;
 	}
 
 	public void Quit()

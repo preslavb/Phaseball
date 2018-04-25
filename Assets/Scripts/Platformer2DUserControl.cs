@@ -13,6 +13,8 @@ namespace UnityStandardAssets._2D
 		public float h;
 		public float v;
 
+		public bool thisPlayerPaused = false;
+
 		private Vector2 jumpVector = new Vector2(0, 0);
 
 		public static bool controllable = true;
@@ -32,14 +34,18 @@ namespace UnityStandardAssets._2D
 
 				GameObject.Find("EventSystem").GetComponent<StandaloneInputModule>().horizontalAxis = "Horizontal" + m_Character.playerNumber.ToString();
 				GameObject.Find("EventSystem").GetComponent<StandaloneInputModule>().verticalAxis = "Vertical" + m_Character.playerNumber.ToString();
+				GameObject.Find("EventSystem").GetComponent<StandaloneInputModule>().submitButton = "Jump" + m_Character.playerNumber.ToString();
 
-				PauseMenu.Instance.PauseGame();
+				PauseMenu.Instance.PauseGame(this);
 			}
 
-			h = CrossPlatformInputManager.GetAxis("Horizontal" + m_Character.playerNumber);
-			v = CrossPlatformInputManager.GetAxis("Vertical" + m_Character.playerNumber);
+			if (!thisPlayerPaused)
+			{
+				h = CrossPlatformInputManager.GetAxis("Horizontal" + m_Character.playerNumber);
+				v = CrossPlatformInputManager.GetAxis("Vertical" + m_Character.playerNumber);
 
-			jumpVector = new Vector2(h, v);
+				jumpVector = new Vector2(h, v);
+			}
 
 			if (controllable)
 			{

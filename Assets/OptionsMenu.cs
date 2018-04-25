@@ -9,6 +9,9 @@ public class OptionsMenu : MonoBehaviour {
 
 	Resolution[] resolutions;
 
+	public RectTransform contentPanel;
+	public ScrollRect scrollRect;
+
 
 	void Start()
 	{
@@ -55,6 +58,15 @@ public class OptionsMenu : MonoBehaviour {
 		Screen.fullScreen = isFullscreen;
 
 	}
+
+	public void SnapTo(RectTransform target)
+    {
+        Canvas.ForceUpdateCanvases();
+
+        resolutionDropdown.transform.GetChild(3).transform.GetChild(0).GetComponent<RectTransform>().anchoredPosition =
+            (Vector2)resolutionDropdown.transform.GetChild(3).GetComponent<ScrollRect>().transform.InverseTransformPoint(resolutionDropdown.transform.GetChild(3).transform.GetChild(0).position)
+            - (Vector2)resolutionDropdown.transform.GetChild(3).GetComponent<ScrollRect>().transform.InverseTransformPoint(target.position);
+    }
 
 }
 
