@@ -128,6 +128,7 @@ public class LaunchArcRenderer : MonoBehaviour
 				break;
 			}
 
+			// We've reached the point where the other arc collided with the level, so add a vertex that is in between this one and the other arc one
 			if (i == arcEndpoint.arcVertices)
 			{
 				arcArray.Add((Vector2.Lerp(arcEndpoint.raycastHit.point, playerCharacterScript.transform.position + otherEndpoint.vertices[i], 0.5f)) - (Vector2)playerCharacterScript.transform.position);
