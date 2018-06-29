@@ -12,12 +12,8 @@ public class Arcline : MonoBehaviour {
 	public GameObject selectedObject;
    
 	public bool Arc;
-	// Use this for initialization
-	void Start () {
-		
-	}
 
-	// Update is called once per frame
+	// Only draw arcs if theres input
 	void Update() {
 		if (Input.GetAxis("Horizontal1") != 0 &&  Arc == false)
 		{

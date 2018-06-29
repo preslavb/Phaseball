@@ -4,6 +4,8 @@ using UnityEngine;
 using Cinemachine;
 
 public class CameraController : MonoBehaviour {
+
+	// Flag for shakey cam
 	public static bool hasScored = false;
 
 	public static CinemachineVirtualCamera gameplayCamera;
@@ -21,7 +23,7 @@ public class CameraController : MonoBehaviour {
 		gameplayCamera.gameObject.SetActive(true);
 	}
 	
-	// Update is called once per frame
+	// Shakey cam or no?
 	void Update () {
 		if (hasScored)
 		{

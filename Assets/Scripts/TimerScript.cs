@@ -3,7 +3,9 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityStandardAssets._2D;
+using UnityEngine.SceneManagement;
 
+// For tracking game duration
 public class TimerScript : MonoBehaviour
 { 
 	public float matchLengthMinutes = 5;
@@ -15,14 +17,18 @@ public class TimerScript : MonoBehaviour
 
 	public Text timerDisplay;
 
+	// References
 	public GameObject reset;
 	public Button resetButton;
 	public Text startMatchText;
 	public Text endMatchText;
 
+	// Singleton
 	public static TimerScript Instance;
 
 	private static bool matchStarted;
+
+	// Run the countdown whenever match started changes to false (used for countdown after a goal)
 	public static bool MatchStarted
 	{
 		get
@@ -54,8 +60,8 @@ public class TimerScript : MonoBehaviour
 		Time.timeScale = 1;
 		timer = (matchLengthMinutes * 60)+ matchLengthSeconds;
 
-		minutes = (timer / 60).ToString("00");
-		seconds = (timer % 60).ToString("00");
+		minutes = Mathf.Floor(timer / 60).ToString("00");
+		seconds = Mathf.Floor(timer % 60).ToString("00");
 
 		timerDisplay.text = minutes +" : "+ seconds;
 		MatchStarted = false;
@@ -65,19 +71,20 @@ public class TimerScript : MonoBehaviour
 		reset.SetActive (false);
 	}
 	
-	// Each frame the delta time is subtracted from the timer and when it is less than or equal to 0 the EndMenu scene is loaded
+	// Each frame the delta time is subtracted from the timer and when it is less than or equal to 0 the game ends
 	void Update ()
 	{
 		if (MatchStarted)
 		{
 			timer -= Time.deltaTime;
-			minutes = (timer / 60).ToString("00");
-			seconds = (timer % 60).ToString("00");
+			minutes = Mathf.Floor(timer / 60).ToString("00");
+			seconds = Mathf.Floor(timer % 60).ToString("00");
 
 			if (timer <= 0)
 			{
 				timer = 0;
 
+				// Check which team won
 				if (GameObject.Find("BlueGoal").GetComponent<GoalScript>().Goals > GameObject.Find("RedGoal").GetComponent<GoalScript>().Goals)
 				{
 					timerDisplay.text = "Warm Team Won!";
@@ -96,14 +103,13 @@ public class TimerScript : MonoBehaviour
 					endMatchText.text = "Match was a draw";
 				}
 
+				// Activate the buttons for reset
 				reset.SetActive(true);
 				resetButton.Select();
 				resetButton.OnSelect(null);
-				//EventSystem.current.SetSelectedGameObject(reset);
 				Time.timeScale = 0;
-
-
 			}
+
 			else
 			{
 				timerDisplay.text = minutes + " : " + seconds;
@@ -113,7 +119,8 @@ public class TimerScript : MonoBehaviour
 
 	public void ResetGame()
 	{
-		Application.LoadLevel(Application.loadedLevel);
+		// Application.LoadLevel(Application.loadedLevel);
+		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 	}
 
 	public void ResetCountdown()
@@ -121,6 +128,7 @@ public class TimerScript : MonoBehaviour
 		StartCoroutine(StartMatchCoroutine());
 	}
 
+	// Coroutine for the countdown
 	private IEnumerator StartMatchCoroutine()
 	{
 		byte matchCountdown = 3;
@@ -135,7 +143,7 @@ public class TimerScript : MonoBehaviour
 			yield return new WaitForSeconds(1);
 			matchCountdown--;
 		}
-		BoostRespawn.Instance.spawnBoost();
+		BoostRespawn.Instance.SpawnBoost();
 
 		startMatchText.gameObject.SetActive(false);
 		MatchStarted = true;

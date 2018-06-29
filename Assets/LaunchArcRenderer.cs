@@ -9,7 +9,6 @@ using UnityStandardAssets._2D;
 [RequireComponent(typeof(LineRenderer))]
 public class LaunchArcRenderer : MonoBehaviour
 {
-	//
 	LineRenderer lr;
 
 	public Platformer2DUserControl playerController;
@@ -20,9 +19,9 @@ public class LaunchArcRenderer : MonoBehaviour
 	public float angle;
 	public int resolution = 20;
 
-
-	float g; // force of gravity of y axis
+	float g;
 	float radianAngle;
+
 	void Awake()
 	{
 		playerController = gameObject.transform.parent.GetComponent<Platformer2DUserControl>();
@@ -30,10 +29,6 @@ public class LaunchArcRenderer : MonoBehaviour
 		lr = GetComponent<LineRenderer>();
 		g = Mathf.Abs(Physics2D.gravity.y);
 	}
-
-
-  
-
 
 	// Use this for initialization
 	void Start()
@@ -43,12 +38,21 @@ public class LaunchArcRenderer : MonoBehaviour
 
 	void RenderArc()
 	{
-		Vector3[] arcArray = CalculateArcArray();
-		
-		lr.positionCount = playerCharacterScript.hasBallControl ?  3 : arcArray.Length;
-		lr.SetPositions(playerCharacterScript.hasBallControl ? CalculateReflectArray() : arcArray);
+		if (playerCharacterScript.hasBallControl)
+		{
+			lr.positionCount = 3;
+			lr.SetPositions(CalculateReflectArray());
+		}
+
+		else
+		{
+			Vector3[] arcArray = CalculateArcArray();
+			lr.positionCount = arcArray.Length;
+			lr.SetPositions(arcArray);
+		}
 	}
 
+	// Find the point at which the player would be if they jumped after a specified time
 	private Vector2 FindPointOnParabola(Vector2 initialVelocity, float time, float gravityAcceleration = -9.81f)
 	{
 		return new Vector2(initialVelocity.x * time, (initialVelocity.y + ((gravityAcceleration * playerCharacterScript.defaultGravity)/2) * time) * time);
@@ -58,12 +62,14 @@ public class LaunchArcRenderer : MonoBehaviour
 	{
 		List<Vector3> arcArray = new List<Vector3>(resolution + 1);
 
+		// The corners to also check for collisions
 		Vector2 offset1 = new Vector2();
 		Vector2 offset2 = new Vector2();
 
 		Vector2 direction = new Vector2(playerController.h, playerController.v);
 		Vector2 dimensions = playerCharacterScript.gameObject.GetComponent<BoxCollider2D>().size;
 
+		// Determine which corners of the character are most likely to hit something on their way when they jump
 		if (direction.x == 0)
 		{
 			offset1 = new Vector2(-dimensions.x / 2, direction.y > 0 ? dimensions.y / 2 : -dimensions.y / 2);
@@ -85,9 +91,11 @@ public class LaunchArcRenderer : MonoBehaviour
 			offset2 = new Vector2(direction.x > 0 ? -dimensions.x / 2 : dimensions.x / 2, -dimensions.y / 2);
 		}
 
+		// Calculate the point at which the corners would hit something
 		Arc end1 = CalculateArcHits(offset1);
 		Arc end2 = CalculateArcHits(offset2);
 
+		// Calculate which corner was hit first (thus making it the only one to be hit, as the character will not move further)
 		Arc arcEndpoint = new Arc();
 		Arc otherEndpoint = new Arc();
 
@@ -101,15 +109,19 @@ public class LaunchArcRenderer : MonoBehaviour
 			otherEndpoint = end1;
 		}
 
-		Vector2 oldVector = FindPointOnParabola(direction * playerCharacterScript.m_JumpForce, 0);
+		// The previous point checked for collisions
+		Vector2 oldVector = FindPointOnParabola(direction * playerCharacterScript.jumpForce, 0);
 
+		// Populate the arc vertices
 		for (int i = 0; i <= arcEndpoint.arcVertices; i++)
 		{
 			float t = (float)i / (float)resolution;
-			Vector2 currentVector = FindPointOnParabola(direction * playerCharacterScript.m_JumpForce, t);
+			Vector2 currentVector = FindPointOnParabola(direction * playerCharacterScript.jumpForce, t);
 
+			// Raycast between the previous vertex and the current one to see if a collision would occur
 			RaycastHit2D raycastHit = Physics2D.Raycast((Vector2)playerCharacterScript.gameObject.transform.position + oldVector, currentVector - oldVector, Vector2.Distance(oldVector, currentVector));
 
+			// There was a registered hit with a level object, so the arc is complete
 			if (raycastHit && raycastHit.collider.gameObject.layer == 9)
 			{
 				arcArray.Add(raycastHit.point - (Vector2)playerCharacterScript.transform.position);
@@ -136,12 +148,12 @@ public class LaunchArcRenderer : MonoBehaviour
 		Arc arcEndpoint = new Arc();
 		arcEndpoint.vertices = new List<Vector3>();
 
-		Vector2 oldVector = FindPointOnParabola(new Vector2(playerController.h, playerController.v) * playerCharacterScript.m_JumpForce, 0);
+		Vector2 oldVector = FindPointOnParabola(new Vector2(playerController.h, playerController.v) * playerCharacterScript.jumpForce, 0);
 
 		for (int i = 0; i <= resolution * 4; i++)
 		{
 			float t = (float)i / (float)resolution;
-			Vector2 currentVector = FindPointOnParabola(new Vector2(playerController.h, playerController.v) * playerCharacterScript.m_JumpForce, t);
+			Vector2 currentVector = FindPointOnParabola(new Vector2(playerController.h, playerController.v) * playerCharacterScript.jumpForce, t);
 
 			RaycastHit2D raycastHit = Physics2D.Raycast((Vector2)playerCharacterScript.gameObject.transform.position + offset + oldVector, currentVector - oldVector, Vector2.Distance(oldVector, currentVector));
 
